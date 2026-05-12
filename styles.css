@@ -69,6 +69,10 @@ a {
   background-size: cover;
 }
 
+.auth-screen[hidden] {
+  display: none;
+}
+
 .auth-card {
   width: min(440px, 100%);
   padding: 30px;
