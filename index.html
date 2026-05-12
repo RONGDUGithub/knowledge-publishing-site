@@ -10,17 +10,33 @@
     <title>RONGDU Knowledge Hub</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
-  <body>
+  <body class="auth-locked">
+    <div class="auth-screen" id="authScreen">
+      <form class="auth-card" id="authForm">
+        <span class="brand-mark">D</span>
+        <p class="eyebrow">Protected Entry</p>
+        <h1>Deafal 知识入口</h1>
+        <p>请输入访问密码后浏览网页资料和 PPT。</p>
+        <label>
+          <span>访问密码</span>
+          <input id="passwordInput" type="password" autocomplete="current-password" placeholder="输入密码" />
+        </label>
+        <button class="button primary" type="submit">进入内容库</button>
+        <p class="auth-error" id="authError" role="alert" hidden>密码不正确，请重新输入。</p>
+      </form>
+    </div>
+
     <header class="site-header">
       <nav class="nav" aria-label="主导航">
         <a class="brand" href="#top" aria-label="返回首页">
-          <span class="brand-mark">R</span>
-          <span>RONGDU Knowledge Hub</span>
+          <span class="brand-mark">D</span>
+          <span>Deafal Knowledge Hub</span>
         </a>
         <div class="nav-links">
-          <a href="#articles">知识库</a>
+          <a href="#articles">内容库</a>
           <a href="#workflow">发布流程</a>
           <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">GitHub</a>
+          <button class="link-button" id="logoutButton" type="button">锁定</button>
         </div>
       </nav>
     </header>
@@ -30,12 +46,12 @@
         <div class="hero-media" role="img" aria-label="知识网络和文档发布场景"></div>
         <div class="hero-content">
           <p class="eyebrow">Personal knowledge publishing</p>
-          <h1 id="hero-title">把研究、笔记和教程发布成一个可访问的网页知识库</h1>
+          <h1 id="hero-title">Deafal 网页资料与课程文档发布入口</h1>
           <p class="hero-copy">
-            这个项目适合先在本地编辑内容，再推送到 GitHub 仓库，并通过 GitHub Pages 生成公开访问链接。
+            这里集中放置学习路径、论文检查清单、Claude Code 指南和大模型智能体 PPT，先本地维护，再推送到 GitHub Pages 发布。
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#articles">浏览知识库</a>
+            <a class="button primary" href="#articles">浏览内容库</a>
             <a class="button secondary" href="#workflow">查看发布流程</a>
           </div>
         </div>
@@ -44,18 +60,18 @@
       <section class="section intro" aria-labelledby="intro-title">
         <div>
           <p class="eyebrow">Structure</p>
-          <h2 id="intro-title">一个轻量、可维护的发布起点</h2>
+          <h2 id="intro-title">先本地整理，再发布到 GitHub</h2>
         </div>
         <div class="intro-grid">
           <article>
             <span class="metric">01</span>
-            <h3>本地编辑</h3>
-            <p>先在电脑上改文章、分类和页面风格，确认没问题再上传。</p>
+            <h3>统一入口</h3>
+            <p>首页先输入密码，再进入资料列表，减少公开页面的直接暴露。</p>
           </article>
           <article>
             <span class="metric">02</span>
-            <h3>GitHub 托管</h3>
-            <p>新建仓库保存代码和内容，版本历史可追踪，适合长期维护。</p>
+            <h3>内容归档</h3>
+            <p>网页和 PPT 都放在 `content` 目录，后续新增资料也保持同一结构。</p>
           </article>
           <article>
             <span class="metric">03</span>
@@ -69,10 +85,10 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">Knowledge Library</p>
-            <h2 id="articles-title">知识库</h2>
+            <h2 id="articles-title">内容库</h2>
           </div>
           <label class="search">
-            <span class="visually-hidden">搜索文章</span>
+            <span class="visually-hidden">搜索内容</span>
             <input id="searchInput" type="search" placeholder="搜索标题、摘要或关键词" />
           </label>
         </div>
@@ -90,7 +106,7 @@
         <ol class="steps">
           <li>
             <strong>本地维护内容</strong>
-            <span>在 `script.js` 的 `articles` 数组里新增文章标题、摘要、分类和链接。</span>
+            <span>把 HTML、PPT 或 PDF 放进 `content` 目录，并在 `script.js` 的 `articles` 数组里新增入口。</span>
           </li>
           <li>
             <strong>推送到 GitHub 仓库</strong>
@@ -109,7 +125,7 @@
     </main>
 
     <footer class="footer">
-      <p>RONGDU Knowledge Hub</p>
+      <p>Deafal Knowledge Hub</p>
       <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">View repositories</a>
     </footer>
 

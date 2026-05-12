@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defal小组学习路线图 - 太原理工大学</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .university-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .header .desc {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* 进度总览 */
+        .progress-overview {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-percent {
+            font-size: 36px;
+            font-weight: bold;
+            color: #7e22ce;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3c72, #7e22ce);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* 部分导航 */
+        .parts-nav {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .part-tab {
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 16px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .part-tab:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .part-tab.active {
+            background: linear-gradient(135deg, #1e3c72, #7e22ce);
+            color: white;
+        }
+
+        .part-tab.active .part-number,
+        .part-tab.active .part-title,
+        .part-tab.active .part-desc {
+            color: white;
+        }
+
+        .part-tab.completed {
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: white;
+        }
+
+        .part-tab.completed .part-number,
+        .part-tab.completed .part-title,
+        .part-tab.completed .part-desc {
+            color: white;
+        }
+
+        .part-number {
+            font-size: 14px;
+            color: #7e22ce;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .part-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .part-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .part-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+        }
+
+        /* 内容区域 */
+        .content-area {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            min-height: 500px;
+        }
+
+        .part-content {
+            display: none;
+        }
+
+        .part-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 章节样式 */
+        .chapter {
+            margin-bottom: 35px;
+            padding-bottom: 35px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .chapter:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .chapter-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e3c72, #7e22ce);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .chapter-title-group {
+            flex: 1;
+        }
+
+        .chapter-number {
+            font-size: 13px;
+            color: #7e22ce;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chapter-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        .chapter-progress-mini {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 学习卡片 */
+        .learning-card {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            border-left: 4px solid #e0e0e0;
+        }
+
+        .learning-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .learning-card.completed {
+            border-left-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-custom {
+            width: 28px;
+            height: 28px;
+            border: 3px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all 0.3s;
+        }
+
+        .learning-card:hover .checkbox-custom {
+            border-color: #7e22ce;
+        }
+
+        .checkbox-custom.checked {
+            background: linear-gradient(135deg, #059669, #10b981);
+            border-color: transparent;
+        }
+
+        .checkbox-custom.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+
+        .card-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .link-btn:hover {
+            background: linear-gradient(135deg, #1e3c72, #7e22ce);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+
+        /* 提示框 */
+        .tip-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0;
+        }
+
+        .tip-box.info {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left-color: #3b82f6;
+        }
+
+        .tip-box.success {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border-left-color: #10b981;
+        }
+
+        .tip-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tip-text {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 子章节 */
+        .subsection {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 附录区域 */
+        .appendix {
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .appendix-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #7e22ce;
+            margin-bottom: 15px;
+        }
+
+        /* 版权 */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        .footer .copyright {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .parts-nav {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .chapter-title {
+                font-size: 20px;
+            }
+
+            .card-links {
+                flex-direction: column;
+            }
+
+            .link-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* 清单样式 */
+        .checklist {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .checklist li {
+            padding: 10px 0 10px 30px;
+            position: relative;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .checklist li::before {
+            content: '○';
+            position: absolute;
+            left: 0;
+            color: #7e22ce;
+            font-weight: bold;
+        }
+
+        .checklist li.completed::before {
+            content: '✓';
+            color: #10b981;
+        }
+
+        /* 时间标签 */
+        .time-tag {
+            display: inline-block;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="university-badge">🏛️ 太原理工大学</div>
+            <h1>Defal 小组学习路线图</h1>
+            <div class="subtitle">从入门到进阶的完整科研学习指南</div>
+            <div class="desc">本学习路线涵盖工具使用、深度学习基础、实战项目和大模型入门，帮助你系统掌握计算机科研所需技能</div>
+        </div>
+
+        <!-- 进度总览 -->
+        <div class="progress-overview">
+            <div class="progress-header">
+                <span class="progress-title">📊 总体学习进度</span>
+                <span class="progress-percent" id="totalPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="totalProgress" style="width: 0%"></div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number" id="totalTasks">0</div>
+                    <div class="stat-label">总任务数</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="completedTasks">0</div>
+                    <div class="stat-label">已完成</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="remainingTasks">0</div>
+                    <div class="stat-label">待完成</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="completedParts">0/4</div>
+                    <div class="stat-label">完成部分</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 部分导航 -->
+        <div class="parts-nav">
+            <button class="part-tab active" onclick="switchPart(0)">
+                <div class="part-status">📚</div>
+                <div class="part-number">PART 01</div>
+                <div class="part-title">基础工具学习</div>
+                <div class="part-desc">GitHub、数据处理、文献检索等科研必备工具</div>
+            </button>
+            <button class="part-tab" onclick="switchPart(1)">
+                <div class="part-status">🧠</div>
+                <div class="part-number">PART 02</div>
+                <div class="part-title">深度学习入门</div>
+                <div class="part-desc">环境配置、PyTorch基础与进阶、CNN原理与实战</div>
+            </button>
+            <button class="part-tab" onclick="switchPart(2)">
+                <div class="part-status">🚀</div>
+                <div class="part-number">PART 03</div>
+                <div class="part-title">深度学习实战</div>
+                <div class="part-desc">Kaggle项目实战、学术写作与LaTeX使用</div>
+            </button>
+            <button class="part-tab" onclick="switchPart(3)">
+                <div class="part-status">🤖</div>
+                <div class="part-number">PART 04</div>
+                <div class="part-title">大模型入门</div>
+                <div class="part-desc">Transformer、LoRA、RAG、Agent等大模型核心技术</div>
+            </button>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="content-area" id="contentArea">
+
+            <!-- 第一部分：基础工具学习 -->
+            <div class="part-content active" data-part="0">
+
+                <!-- 第一章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🐙</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第一章</div>
+                            <div class="chapter-title">认识 GitHub</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p0-c1">0/1</div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 为什么学习 GitHub？</div>
+                        <div class="tip-text">GitHub 在未来的学习生涯中尤其重要：找别人的代码和数据集、上传开源代码、建立个人主页展示自己。你的 star 数代表了工作的影响力。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c1-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">注册 GitHub 账号并学习基础使用</div>
+                                <div class="card-desc">完成 GitHub 账号注册，学习仓库创建、代码上传、分支管理等基础操作</div>
+                                <div class="card-links">
+                                    <a href="https://github.com/CatOneTwo/GitHub-Tutorial/issues/1" target="_blank" class="link-btn">📖 教程链接</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">📊</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第二章</div>
+                            <div class="chapter-title">学习数据处理</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p0-c2">0/1</div>
+                    </div>
+
+                    <div class="tip-box info">
+                        <div class="tip-title">📌 数据处理的重要性</div>
+                        <div class="tip-text">数据处理是否得当直接影响实验效果的好坏。无论做什么方向的科研，数据处理都是最重要的基本功。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c2-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">掌握数据分析基础技能</div>
+                                <div class="card-desc">学习使用 Pandas、NumPy 进行数据清洗、转换和可视化，掌握数据预处理的基本方法</div>
+                                <div class="card-links">
+                                    <a href="https://github.com/datawhalechina/hands-on-data-analysis" target="_blank" class="link-btn">📊 DataWhale 教程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🔍</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第三章</div>
+                            <div class="chapter-title">如何专业查找英文文献</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p0-c3">0/5</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c3-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学会使用 Google Scholar 查找文献</div>
+                                <div class="card-desc">掌握科学上网访问谷歌学术，或使用镜像网址。谷歌学术是最权威的英文论文集合平台。</div>
+                                <div class="card-links">
+                                    <a href="https://zhuanlan.zhihu.com/p/434704700" target="_blank" class="link-btn">📖 知乎教程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c3-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">认识 Arxiv 预印本平台</div>
+                                <div class="card-desc">Arxiv 是预印版本论文的上传和下载网站，最新最热的论文都在这上面免费下载。</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1DW2iBvEGe" target="_blank" class="link-btn">▶️ B站视频</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c3-t3">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">认识 IEEE 和 ACM 两大权威出版商</div>
+                                <div class="card-desc">了解 CCF、IEEE 和 ACM 的区别，学会使用数据库检索和下载论文</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1qm4y1n7Fa" target="_blank" class="link-btn">▶️ 科普视频</a>
+                                    <a href="https://ieeexplore.ieee.org/Xplore/home.jsp" target="_blank" class="link-btn">🔗 IEEE Xplore</a>
+                                    <a href="https://www.acm.org/" target="_blank" class="link-btn">🔗 ACM</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c3-t4">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">理解什么是顶会顶刊</div>
+                                <div class="card-desc">了解计算机领域顶级会议（CCF-A/B/C）和期刊的分级体系</div>
+                                <div class="card-links">
+                                    <a href="https://blog.csdn.net/Edward1027/article/details/145945409" target="_blank" class="link-btn">📖 CSDN文章</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p0-c3-t5">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学会高效检索文献的方法</div>
+                                <div class="card-desc">掌握关键词组合、引用追踪、作者追踪等高级检索技巧</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV13p4y1a7VG" target="_blank" class="link-btn">▶️ 检索技巧视频</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第二部分：深度学习入门 -->
+            <div class="part-content" data-part="1">
+
+                <div class="tip-box">
+                    <div class="tip-title">💪 独立解决问题</div>
+                    <div class="tip-text">在深度学习从入门到进阶的旅程中，你一定会遇到各种预料之外的困难。这时，尝试通过搜索引擎查找资料，或是清晰地向 GPT、豆包等 AI 助手描述问题，本身就是解决问题、提升自我的第一步。学会独立应对突发情况，正是计算机专业一项至关重要的能力。</div>
+                </div>
+
+                <!-- 第一章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">⚙️</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第一章</div>
+                            <div class="chapter-title">环境安装 1.0</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p1-c1">0/1</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c1-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">安装 Anaconda、PyCharm 或 VSCode</div>
+                                <div class="card-desc">配置 Python 开发环境，安装必要的IDE工具</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：炮哥带你学《Pytorch框架》3.2-3.3节</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🎓</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第二章</div>
+                            <div class="chapter-title">深度学习入门阶段</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p1-c2">0/1</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c2-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习深度学习基础知识<span class="time-tag">重点</span></div>
+                                <div class="card-desc">观看《手把手教学-快速带你入门深度学习与实战》2.1-4.13小节，上手学习相应代码</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：炮哥带你学</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🖥️</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第三章</div>
+                            <div class="chapter-title">环境安装 2.0</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p1-c3">0/2</div>
+                    </div>
+
+                    <div class="tip-box info">
+                        <div class="tip-title">💻 GPU vs CPU</div>
+                        <div class="tip-text">如果电脑有 GPU，需要安装驱动并配置 CUDA 环境；如果没有 GPU，只安装 PyTorch 包即可，CPU 也能跑就是慢，在学习阶段暂时可以不用 GPU。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c3-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">有 GPU：安装驱动并配置环境</div>
+                                <div class="card-desc">安装 NVIDIA 显卡驱动、CUDA Toolkit、cuDNN，配置 PyTorch GPU 版本</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：炮哥带你学《Pytorch框架》3.3-3.8节</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c3-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">无 GPU：安装 PyTorch CPU 版本</div>
+                                <div class="card-desc">通过 pip 或 conda 安装 PyTorch CPU 版本，验证安装成功</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第四章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">📈</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第四章</div>
+                            <div class="chapter-title">深度学习进阶阶段</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p1-c4">0/5</div>
+                    </div>
+
+                    <div class="tip-box success">
+                        <div class="tip-title">📦 代码和课件下载</div>
+                        <div class="tip-text">
+                            <strong>入门内容：</strong> 百度网盘链接: https://pan.baidu.com/s/1C8mQA9-4a3ZMCpMaZyR8HQ 提取码: xwv5<br><br>
+                            <strong>进阶内容：</strong> 百度网盘链接: https://pan.baidu.com/s/1_Z8PHZ9qI-aQkEMn09YULA 提取码: grkp
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c4-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习 2.12-2.20 节内容</div>
+                                <div class="card-desc">深入学习 PyTorch 高级特性和神经网络组件</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c4-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习第4章（只看 4.1-4.12 视频）</div>
+                                <div class="card-desc">学习组件和原理，不需要实战代码</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c4-t3">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习第5章（视频+代码实战）</div>
+                                <div class="card-desc">经典卷积神经网络实战，需要完成代码练习</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c4-t4">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习第6章（只看 6.1-6.10 视频）</div>
+                                <div class="card-desc">了解进阶主题和优化技巧</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p1-c4-t5">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习第7章（视频+代码实战）</div>
+                                <div class="card-desc">综合项目实战，完成完整的深度学习项目</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 附录 -->
+                <div class="appendix">
+                    <div class="appendix-title">📎 附录：免费算力平台推荐</div>
+                    <div class="card-desc" style="margin-bottom: 15px;">
+                        当你开始跑实际项目时，如果没有实验室算力支持，可以借助学生免费额度或租赁低价算力。最常用且实用的免费方案是 <strong>Kaggle Kernels</strong>。
+                    </div>
+                    <div class="learning-card" data-id="p1-ap-t1" style="background: white;">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学会使用 Kaggle Kernels 免费 GPU</div>
+                                <div class="card-desc">Google 旗下的数据科学社区，提供稳定的免费 GPU（32G内存+4核CPU+32G显存，每周约30小时）</div>
+                                <div class="card-links">
+                                    <a href="https://www.kaggle.com/code" target="_blank" class="link-btn">🔗 Kaggle官网</a>
+                                    <a href="https://www.bilibili.com/video/BV13UZcYGEr1" target="_blank" class="link-btn">▶️ 使用教程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第三部分：深度学习实战 -->
+            <div class="part-content" data-part="2">
+
+                <!-- 第一章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🏆</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第一章</div>
+                            <div class="chapter-title">Kaggle 入门教程</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p2-c1">0/2</div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">🎯 实战目标</div>
+                        <div class="tip-text">通过完整学习 Kaggle 入门教程（全长2小时50分钟），在 Kaggle 上找到任意一个项目并完成它。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p2-c1-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">完成 Kaggle 入门视频教程</div>
+                                <div class="card-desc">系统学习 Kaggle 平台使用方法、Notebook 编写、数据集处理、模型提交等完整流程</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1TXnbzAErm?p=6" target="_blank" class="link-btn">▶️ B站视频教程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p2-c1-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">独立完成一个 Kaggle 项目</div>
+                                <div class="card-desc">在 Kaggle 上选择一个感兴趣的项目（可以是入门竞赛或数据集分析），完成数据探索、模型构建、结果提交全过程</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">✍️</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第二章</div>
+                            <div class="chapter-title">学术写作与 LaTeX</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p2-c2">0/1</div>
+                    </div>
+
+                    <div class="tip-box info">
+                        <div class="tip-title">📝 为什么要学 LaTeX？</div>
+                        <div class="tip-text">Overleaf 是一个用 LaTeX 写作的平台，未来提交论文或者参加美国数据建模竞赛都会用到。Word 版本格式写的论文因为排版丑、操作麻烦已经逐步被淘汰。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p2-c2-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习 LaTeX 与 Overleaf 使用<span class="time-tag">约3小时</span></div>
+                                <div class="card-desc">掌握 LaTeX 基础语法、文档结构、数学公式、图表插入，学会使用 Overleaf 在线编辑器</div>
+                                <div class="card-links">
+                                    <a href="https://blog.csdn.net/qq_73704268/article/details/151226564" target="_blank" class="link-btn">📖 CSDN教程</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第四部分：大模型入门 -->
+            <div class="part-content" data-part="3">
+
+                <!-- 第一章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🧩</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第一章</div>
+                            <div class="chapter-title">基础知识</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p3-c1">0/3</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c1-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">深度学习基础回顾（2.1-4.13）</div>
+                                <div class="card-desc">复习深度学习核心概念，为大模型学习打好基础</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1eP411w7Re" target="_blank" class="link-btn">▶️ B站视频</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c1-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">了解什么是残差（Residual）</div>
+                                <div class="card-desc">理解 ResNet 中的残差连接思想，这是深度学习的重要里程碑</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c1-t3">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">Transformer 入门</div>
+                                <div class="card-desc">学习 Attention 机制、Self-Attention、Multi-Head Attention 等 Transformer 核心组件</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1ej1EBWEWu" target="_blank" class="link-btn">▶️ Transformer入门</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🚀</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第二章</div>
+                            <div class="chapter-title">大模型科普 1.0</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p3-c2">0/4</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c2-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">了解越狱攻击和 Prompt 攻击<span class="time-tag">20分钟</span></div>
+                                <div class="card-desc">学习大模型的安全问题，了解 Jailbreak 和 Prompt Injection 攻击原理</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1DMUrYbEkC" target="_blank" class="link-btn">▶️ 安全攻击科普</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c2-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习大模型微调和 LoRA<span class="time-tag">25分钟</span></div>
+                                <div class="card-desc">理解 Fine-tuning、Parameter-Efficient Fine-Tuning (PEFT) 和 LoRA 低秩适配技术</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1Q6qFB1EHM" target="_blank" class="link-btn">▶️ LoRA 详解</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c2-t3">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习数据蒸馏<span class="time-tag">9分钟</span></div>
+                                <div class="card-desc">了解 Knowledge Distillation 的原理，如何用小型模型学习大模型的知识</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：大模型研学社《模型蒸馏》</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c2-t4">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习 Agent 概念<span class="time-tag">28分钟</span></div>
+                                <div class="card-desc">理解 AI Agent 的概念、原理与构建模式，从零了解智能体架构</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1TSg7zuEqR" target="_blank" class="link-btn">▶️ Agent 学习</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三章 -->
+                <div class="chapter">
+                    <div class="chapter-header">
+                        <div class="chapter-icon">🔮</div>
+                        <div class="chapter-title-group">
+                            <div class="chapter-number">第三章</div>
+                            <div class="chapter-title">大模型科普 2.0</div>
+                        </div>
+                        <div class="chapter-progress-mini" id="progress-p3-c3">0/3</div>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">🚀 Transformer 已经8年了</div>
+                        <div class="tip-text">Transformer 已经发展了八年，现在的大模型长什么样子？学习最新的架构演进。</div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c3-t1">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">了解大模型8年来的重大进化<span class="time-tag">15分钟</span></div>
+                                <div class="card-desc">学习架构演进：MoE、Mamba、Titans、RAG 等新技术</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：《一口气了解大模型8年来的重大进化》</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c3-t2">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习 RAG 技术<span class="time-tag">17分钟</span></div>
+                                <div class="card-desc">理解 Retrieval-Augmented Generation，高质量知识库背后的技术全流程</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com" target="_blank" class="link-btn">▶️ B站搜索：《RAG 工作机制详解》</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="learning-card" data-id="p3-c3-t3">
+                        <div class="card-header">
+                            <div class="checkbox-custom"></div>
+                            <div class="card-content">
+                                <div class="card-title">学习 MoE 专家模型<span class="time-tag">25分钟</span></div>
+                                <div class="card-desc">理解 Mixture of Experts 混合专家模型架构，GPT-4 的核心技术之一</div>
+                                <div class="card-links">
+                                    <a href="https://www.bilibili.com/video/BV1wPUDBYErR" target="_blank" class="link-btn">▶️ MoE 架构详解</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 版权信息 -->
+        <div class="footer">
+            <p class="copyright">© 2026 版权所有 | 杜蓉 durong@tyut.edu.cn</p>
+            <p>太原理工大学 Defal 小组</p>
+            <p style="margin-top: 10px; font-size: 12px; opacity: 0.7;">本学习路线仅供内部学习使用</p>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        let progress = JSON.parse(localStorage.getItem('defalProgress')) || {};
+
+        // 任务总数配置
+        const partTasks = {
+            0: 8,  // 第一部分：8个任务
+            1: 10, // 第二部分：10个任务
+            2: 3,  // 第三部分：3个任务
+            3: 10  // 第四部分：10个任务
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initCheckboxes();
+            updateAllProgress();
+        });
+
+        // 初始化复选框
+        function initCheckboxes() {
+            document.querySelectorAll('.learning-card').forEach(card => {
+                const id = card.dataset.id;
+                const checkbox = card.querySelector('.checkbox-custom');
+                const isChecked = progress[id] || false;
+
+                if (isChecked) {
+                    card.classList.add('completed');
+                    checkbox.classList.add('checked');
+                }
+
+                card.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'A') {
+                        toggleTask(id);
+                    }
+                });
+            });
+        }
+
+        // 切换任务状态
+        function toggleTask(id) {
+            const card = document.querySelector(`[data-id="${id}"]`);
+            const checkbox = card.querySelector('.checkbox-custom');
+            const isChecked = card.classList.contains('completed');
+
+            if (isChecked) {
+                card.classList.remove('completed');
+                checkbox.classList.remove('checked');
+                progress[id] = false;
+            } else {
+                card.classList.add('completed');
+                checkbox.classList.add('checked');
+                progress[id] = true;
+            }
+
+            localStorage.setItem('defalProgress', JSON.stringify(progress));
+            updateAllProgress();
+        }
+
+        // 更新所有进度
+        function updateAllProgress() {
+            let totalCompleted = 0;
+            let totalTasks = 0;
+            let completedParts = 0;
+
+            // 更新每个部分的进度
+            for (let part = 0; part <= 3; part++) {
+                const partCards = document.querySelectorAll(`.part-content[data-part="${part}"] .learning-card`);
+                let partCompleted = 0;
+
+                partCards.forEach(card => {
+                    totalTasks++;
+                    if (card.classList.contains('completed')) {
+                        totalCompleted++;
+                        partCompleted++;
+                    }
+                });
+
+                // 更新章节进度显示
+                updateChapterProgress(part);
+
+                // 检查部分是否完成
+                if (partCompleted === partCards.length && partCards.length > 0) {
+                    completedParts++;
+                }
+            }
+
+            // 更新总体进度
+            const totalPercent = totalTasks > 0 ? Math.round((totalCompleted / totalTasks) * 100) : 0;
+            document.getElementById('totalPercent').textContent = totalPercent + '%';
+            document.getElementById('totalProgress').style.width = totalPercent + '%';
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = totalCompleted;
+            document.getElementById('remainingTasks').textContent = totalTasks - totalCompleted;
+            document.getElementById('completedParts').textContent = completedParts + '/4';
+
+            // 更新标签状态
+            updatePartTabs(completedParts);
+        }
+
+        // 更新章节内进度
+        function updateChapterProgress(part) {
+            const chapters = document.querySelectorAll(`.part-content[data-part="${part}"] .chapter`);
+
+            chapters.forEach(chapter => {
+                const cards = chapter.querySelectorAll('.learning-card');
+                const completed = chapter.querySelectorAll('.learning-card.completed').length;
+                const progressEl = chapter.querySelector('.chapter-progress-mini');
+                if (progressEl) {
+                    progressEl.textContent = `${completed}/${cards.length}`;
+                }
+            });
+        }
+
+        // 更新部分标签状态
+        function updatePartTabs(completedCount) {
+            const tabs = document.querySelectorAll('.part-tab');
+            tabs.forEach((tab, index) => {
+                const cards = document.querySelectorAll(`.part-content[data-part="${index}"] .learning-card`);
+                const completed = document.querySelectorAll(`.part-content[data-part="${index}"] .learning-card.completed`).length;
+
+                if (completed === cards.length && cards.length > 0) {
+                    tab.classList.add('completed');
+                    tab.querySelector('.part-status').textContent = '✅';
+                } else {
+                    tab.classList.remove('completed');
+                    const icons = ['📚', '🧠', '🚀', '🤖'];
+                    tab.querySelector('.part-status').textContent = icons[index];
+                }
+            });
+        }
+
+        // 切换部分
+        function switchPart(part) {
+            document.querySelectorAll('.part-tab').forEach((tab, index) => {
+                tab.classList.toggle('active', index === part);
+            });
+
+            document.querySelectorAll('.part-content').forEach((content, index) => {
+                content.classList.toggle('active', index === part);
+            });
+        }
+    </script>
+</body>
+</html>

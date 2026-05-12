@@ -1,6 +1,12 @@
 # RONGDU Knowledge Hub
 
-这是一个适合 GitHub Pages 发布的静态知识库项目。
+这是一个适合 GitHub Pages 发布的静态知识库项目，当前首页设置了访问密码：
+
+```text
+Deafal123
+```
+
+注意：GitHub Pages 是静态托管，前端密码只能作为浏览入口门槛，不能提供真正的服务器级访问控制。
 
 ## 本地查看
 
@@ -8,7 +14,7 @@
 
 ## 更新文章
 
-在 `script.js` 的 `articles` 数组中新增或修改文章：
+资料文件放在 `content` 目录中。在 `script.js` 的 `articles` 数组中新增或修改入口：
 
 ```js
 {

@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太原理工大学Defal小组写作自检流程</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            padding: 20px 0;
+        }
+
+        .university-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+
+        /* 重置按钮 */
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px 24px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        /* 总体进度卡片 */
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-percent {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        /* 章节导航 */
+        .chapter-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .chapter-tab {
+            padding: 12px 22px;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .chapter-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .chapter-tab.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .chapter-tab.completed {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+
+        /* 内容区域 */
+        .content-area {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            min-height: 500px;
+        }
+
+        .chapter-content {
+            display: none;
+        }
+
+        .chapter-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 章节标题 */
+        .chapter-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .chapter-number-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .chapter-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .chapter-desc {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 小节 */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        /* 检查项 */
+        .checklist {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .check-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .check-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .check-item.checked {
+            background: #e8f5e9;
+        }
+
+        .check-item.checked .check-text {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .checkbox-custom {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: all 0.3s;
+        }
+
+        .check-item:hover .checkbox-custom {
+            border-color: #667eea;
+        }
+
+        .checkbox-custom.checked {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            border-color: transparent;
+        }
+
+        .checkbox-custom.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .check-text {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .check-text strong {
+            color: #667eea;
+        }
+
+        /* 重要提示 */
+        .notice-box {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-left: 4px solid #ff9800;
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            margin: 15px 0;
+        }
+
+        .notice-box.important {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border-left-color: #f44336;
+        }
+
+        .notice-box.success {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-left-color: #4caf50;
+        }
+
+        .notice-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .notice-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* 链接按钮 */
+        .link-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .link-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 章节进度 */
+        .chapter-progress {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .chapter-progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .chapter-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #45a049);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .chapter-progress-text {
+            text-align: right;
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* 引用块 */
+        blockquote {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            color: #666;
+        }
+
+        /* 子章节 */
+        .subsection {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .subsection-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 12px;
+        }
+
+        /* 完成庆祝区域 */
+        .celebration-section {
+            text-align: center;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-radius: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .celebration-section.show {
+            display: block;
+            animation: celebrate 0.6s ease;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .celebration-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .celebration-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+
+        .celebration-text {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .celebration-hint {
+            margin-top: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .chapter-nav {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .chapter-tab {
+                flex-shrink: 0;
+            }
+
+            .check-item {
+                padding: 12px;
+            }
+
+            .check-text {
+                font-size: 14px;
+            }
+        }
+
+        /* 代码样式 */
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="university-badge">🏛️ 太原理工大学 Defal 小组</div>
+            <h1>写作自检流程</h1>
+            <button class="reset-btn" onclick="resetProgress()">
+                <span>🔄</span>
+                <span>开始新论文（清空进度）</span>
+            </button>
+        </div>
+
+        <!-- 总体进度 -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <span class="progress-title">📊 总体完成进度</span>
+                <span class="progress-percent" id="totalPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="totalProgressBar" style="width: 0%"></div>
+            </div>
+            <div class="progress-stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalTasks">0</div>
+                    <div class="stat-label">总检查项</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="completedTasks">0</div>
+                    <div class="stat-label">已完成</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="remainingTasks">0</div>
+                    <div class="stat-label">待完成</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="completedChapters">0</div>
+                    <div class="stat-label">已完成章节</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 章节导航 -->
+        <div class="chapter-nav" id="chapterNav">
+            <button class="chapter-tab active" onclick="switchChapter(0)">
+                <span>📖</span>
+                <span>第0章</span>
+            </button>
+            <button class="chapter-tab" onclick="switchChapter(1)">
+                <span>📝</span>
+                <span>第一章</span>
+            </button>
+            <button class="chapter-tab" onclick="switchChapter(2)">
+                <span>🔍</span>
+                <span>第二章</span>
+            </button>
+            <button class="chapter-tab" onclick="switchChapter(3)">
+                <span>📋</span>
+                <span>第三章</span>
+            </button>
+            <button class="chapter-tab" onclick="switchChapter(4)">
+                <span>✅</span>
+                <span>第四章</span>
+            </button>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="content-area" id="contentArea">
+
+            <!-- 第0章 -->
+            <div class="chapter-content active" data-chapter="0">
+                <div class="chapter-header">
+                    <span class="chapter-number-badge">第0章</span>
+                    <h2 class="chapter-title">前置知识准备</h2>
+                    <p class="chapter-desc">在开始撰写论文之前，请确保已掌握必要的工具和技能。</p>
+                </div>
+
+                <div class="notice-box important">
+                    <div class="notice-title">⚠️ 必读要求</div>
+                    <div class="notice-text">在正式开始论文写作前，请确保已经学习过以下教程：</div>
+                    <a href="https://blog.csdn.net/qq_73704268/article/details/151226564" target="_blank" class="link-btn">📖 LaTeX & Overleaf 教程</a>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">工具准备检查</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c0-1">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已完成 LaTeX 基础语法学习（包括文档结构、章节命令、数学公式）</div>
+                        </div>
+                        <div class="check-item" data-id="c0-2">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已注册并熟练使用 Overleaf 在线编辑器</div>
+                        </div>
+                        <div class="check-item" data-id="c0-3">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已掌握 BibTeX 参考文献管理方法</div>
+                        </div>
+                        <div class="check-item" data-id="c0-4">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已熟悉常用数学公式编辑（矩阵、求和、积分等）</div>
+                        </div>
+                        <div class="check-item" data-id="c0-5">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已掌握图表插入方法（figure、table、subfigure）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-progress">
+                    <div class="chapter-progress-bar">
+                        <div class="chapter-progress-fill" id="progress-0" style="width: 0%"></div>
+                    </div>
+                    <div class="chapter-progress-text" id="progress-text-0">0/5 项完成</div>
+                </div>
+            </div>
+
+            <!-- 第一章 -->
+            <div class="chapter-content" data-chapter="1">
+                <div class="chapter-header">
+                    <span class="chapter-number-badge">第一章</span>
+                    <h2 class="chapter-title">开始写论文前的准备</h2>
+                    <p class="chapter-desc">确定投稿目标，建立论文框架，准备技术素材。</p>
+                </div>
+
+                <div class="notice-box">
+                    <div class="notice-title">💡 投稿前须知</div>
+                    <div class="notice-text">如果确定了要投的会议和期刊，请务必使用官网要求的模板。需要搞清楚是否<strong>双盲评审</strong>等道德规范规则。</div>
+                </div>
+
+                <div class="notice-box important">
+                    <div class="notice-title">🎯 首次写作建议</div>
+                    <div class="notice-text"><strong>第一次写作的时候，请找一篇顶会论文进行全方位的模仿。</strong>学习其结构安排、段落组织、图表样式、公式排版等。</div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">一、Introduction（第一章）</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-1">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">讲清楚研究<strong>背景</strong>和<strong>动机</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c1-2">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">分析现有方法的<strong>缺陷</strong>和不足</div>
+                        </div>
+                        <div class="check-item" data-id="c1-3">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">明确提出你能解决的<strong>痛点</strong>（pain points）</div>
+                        </div>
+                        <div class="check-item" data-id="c1-4">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">列出本文的 <strong>Contributions</strong>（贡献点，通常3-4条）</div>
+                        </div>
+                        <div class="check-item" data-id="c1-5">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">给出论文<strong>组织结构</strong>（第X章是什么工作）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">二、Preliminary（第二章）</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-6">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">系统介绍<strong>先验知识</strong>和背景理论</div>
+                        </div>
+                        <div class="check-item" data-id="c1-7">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">定义必要的符号和术语（与全文统一）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">三、技术章节框架（第三章）</h3>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">3.1 系统框架图</h4>
+                        <div class="checklist">
+                            <div class="check-item" data-id="c1-8">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">绘制 <strong>System Framework / Technical Workflow</strong> 图</div>
+                            </div>
+                            <div class="check-item" data-id="c1-9">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">技术部分描述完成后，使用 GPT 5.4 thinking Xhigh 生成画图提示词</div>
+                            </div>
+                            <div class="check-item" data-id="c1-10">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">在 Nano-banana2 中生成多版本图片进行比对</div>
+                            </div>
+                            <div class="check-item" data-id="c1-11">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">使用 WPS 图片编辑器手动微调（检查字体、内容一致性）</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="subsection-title">3.2 问题定义</h4>
+                        <div class="checklist">
+                            <div class="check-item" data-id="c1-12">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">用<strong>符号化</strong>内容定义所有变量</div>
+                            </div>
+                            <div class="check-item" data-id="c1-13">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">用公式定义最后要解决的优化问题</div>
+                            </div>
+                            <div class="check-item" data-id="c1-14">
+                                <div class="checkbox-custom"></div>
+                                <div class="check-text">全文章节符号定义保持<strong>统一</strong>，首次定义后沿用</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">四、技术方案命名</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-15">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">为每个原创技术起一个具体的<strong>缩写名称</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">五、形式化要求（必读）</h3>
+                    <div class="notice-box important">
+                        <div class="notice-text">不允许连续<strong>三大段纯文字</strong>说理！必须形式化处理。</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-16">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">关键名词转化为<strong>字母符号</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c1-17">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">关键步骤转化为<strong>数学公式</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c1-18">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">关键说理形式化为<strong>理论和证明</strong>（Lemma/Theorem/Proof）</div>
+                        </div>
+                    </div>
+                    <blockquote>
+                        参考：<a href="https://blog.csdn.net/Anne033/article/details/123367798" target="_blank">学术论文写作规范指南</a>
+                    </blockquote>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">六、模块化整理</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-19">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">使用 <code>\subsubsection</code> 或 <code>\noindent\textbf{小节标题.}</code> 分块</div>
+                        </div>
+                        <div class="check-item" data-id="c1-20">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">不同意思的段落进行<strong>可视化分割</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">七、技术小节写作结构</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-21">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">小节开头说明：a) 现有方法怎么做及不足；或 b) 直觉方法及问题；或 c) 之前工作，然后讲<strong>我要怎么做</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">八、工作量体现</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-22">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">调研<strong>最新的</strong>相关论文（近1-2年）</div>
+                        </div>
+                        <div class="check-item" data-id="c1-23">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">实验对比方法<strong>三个以上</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">九、Related Work</h3>
+                    <div class="notice-box">
+                        <div class="notice-text">Related work 的 section 部分要<strong>认真对待，调研要充分</strong>（六页以下的论文可以不用添加）。</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-24">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已完成充分的 Related Work 调研（六页以下论文可跳过）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">十、参考文献</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c1-25">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">使用 <strong>BibTeX (.bib)</strong> 格式管理参考文献</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-progress">
+                    <div class="chapter-progress-bar">
+                        <div class="chapter-progress-fill" id="progress-1" style="width: 0%"></div>
+                    </div>
+                    <div class="chapter-progress-text" id="progress-text-1">0/25 项完成</div>
+                </div>
+            </div>
+
+            <!-- 第二章 -->
+            <div class="chapter-content" data-chapter="2">
+                <div class="chapter-header">
+                    <span class="chapter-number-badge">第二章</span>
+                    <h2 class="chapter-title">内容自检1 - GPT语法检查</h2>
+                    <p class="chapter-desc">分章节输入GPT进行系统性内容审查。</p>
+                </div>
+
+                <div class="notice-box">
+                    <div class="notice-title">🤖 GPT检查指令</div>
+                    <div class="notice-text">将内容<strong>分章节（section）</strong>输入 GPT-4.1，使用以下命令：</div>
+                    <blockquote>这是我的要投的计算机科学论文，请帮我检查：a. 前后不一致的地方，b. 有无语法错误，c. 是否有解释不清楚的，d. 是否有大段的文字需要修改</blockquote>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">GPT使用注意事项</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c2-1">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">了解GPT<strong>长记忆有限</strong>，该命令可以<strong>反复输入</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c2-2">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">复制完大段内容后，<strong>再次检查</strong>：a) 内容意思是否被修改；b) 字母在LaTeX格式中是否正确（注意转义）</div>
+                        </div>
+                        <div class="check-item" data-id="c2-3">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">要求GPT输出 <strong>"LaTeX"</strong> 格式，方便直接复制</div>
+                        </div>
+                        <div class="check-item" data-id="c2-4">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">以<strong>段落为单位</strong>修改，改完后检查当前段落正确性，再进入下一段</div>
+                        </div>
+                        <div class="check-item" data-id="c2-5">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">已阅读并理解<strong>所有注意事项</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notice-box important">
+                    <div class="notice-title">⚠️ 退回机制</div>
+                    <div class="notice-text">若发现任意<strong>五处以上</strong>下述提到的错误，将把文稿退回，要求学生自己重新检查。</div>
+                </div>
+
+                <div class="chapter-progress">
+                    <div class="chapter-progress-bar">
+                        <div class="chapter-progress-fill" id="progress-2" style="width: 0%"></div>
+                    </div>
+                    <div class="chapter-progress-text" id="progress-text-2">0/5 项完成</div>
+                </div>
+            </div>
+
+            <!-- 第三章 -->
+            <div class="chapter-content" data-chapter="3">
+                <div class="chapter-header">
+                    <span class="chapter-number-badge">第三章</span>
+                    <h2 class="chapter-title">形式审查</h2>
+                    <p class="chapter-desc">细致的格式、引用、一致性检查。</p>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">一、文献引用检测</h3>
+                    <div class="notice-box important">
+                        <div class="notice-title">🔍 检测引用幻觉</div>
+                        <div class="notice-text">务必检查 <code>\cite{}</code> 中的文献是否存在以下问题</div>
+                    </div>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-1">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">a) 检查文章<strong>是否真实存在</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c3-2">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">b) 检查文章<strong>题目是否正确</strong>（避免缩写错误）</div>
+                        </div>
+                        <div class="check-item" data-id="c3-3">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">c) 检查<strong>表述是否正确和相关</strong>（引用内容是否支持你的观点）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">二、标号统一</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-4">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">所有 <strong>Section</strong> 使用 <code>\label{sec:语义名}</code> 编号</div>
+                        </div>
+                        <div class="check-item" data-id="c3-5">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">所有<strong>图表</strong>使用 <code>\label{fig:语义名}</code> / <code>\label{tab:语义名}</code> 编号</div>
+                        </div>
+                        <div class="check-item" data-id="c3-6">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">所有<strong>伪代码</strong>使用 <code>\label{alg:语义名}</code> 编号</div>
+                        </div>
+                        <div class="check-item" data-id="c3-7">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">调用时使用 <code>\ref{}</code>，实现自动编号，无需手动追踪"图1""表2"</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">三、引用完整性</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-8">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">所有图表、伪代码在<strong>正文中必须有引用</strong>（<code>\ref{}</code>）</div>
+                        </div>
+                        <div class="check-item" data-id="c3-9">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">所有定义、公理、定理必须有<strong>存在意义</strong>的表述（说明其作用和用途）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">四、一致性检查</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-10">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">关键词、技术名称、字母表述<strong>全文统一</strong>，不能有多种表述</div>
+                        </div>
+                        <div class="check-item" data-id="c3-11">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">a) 字母贴近实际意义（如用户集合用U而非A）</div>
+                        </div>
+                        <div class="check-item" data-id="c3-12">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">b) 同一字母不重复表达两个不同实体</div>
+                        </div>
+                        <div class="check-item" data-id="c3-13">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">c) 上下标使用尽量简化</div>
+                        </div>
+                        <div class="check-item" data-id="c3-14">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">d) 最后人工检查前后字母一致性（GPT可能遗漏）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">五、简洁性原则</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-15">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">未被引用的公式去掉编号（使用 <code>\[ \]</code> 或 <code>equation*</code>）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">六、实验图表布局</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-16">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">实验图表要<strong>集中</strong>（如8张或16张）</div>
+                        </div>
+                        <div class="check-item" data-id="c3-17">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">放置在实验部分每一页的<strong>最顶端</strong>（使用 <code>[t]</code> 置顶参数）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">七、标题格式</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-18">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">检查二、三级标题大小写<strong>统一</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c3-19">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">黑体标题统一使用 <code>\noindent\textbf{This is a caption.}</code></div>
+                        </div>
+                        <div class="check-item" data-id="c3-20">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">黑色标题<strong>必须添加"."</strong>（句点）</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">八、数据集引用</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-21">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">数据集名称使用<strong>加粗</strong>（<code>\textbf{DatasetName}</code>）</div>
+                        </div>
+                        <div class="check-item" data-id="c3-22">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">必须添加<strong>数据来源</strong>：a) 使用 <code>\footnote{www.example.com}</code> 或 b) 作为参考文献引入</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">九、编译检查</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c3-23">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">编译PDF后全文搜索<strong>"[TODO]"</strong>，确保无遗漏</div>
+                        </div>
+                        <div class="check-item" data-id="c3-24">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">编译PDF后全文搜索<strong>"？"</strong>，确保无遗漏</div>
+                        </div>
+                        <div class="check-item" data-id="c3-25">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">编译PDF后全文搜索<strong>"XXX"</strong>，确保无占位符</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chapter-progress">
+                    <div class="chapter-progress-bar">
+                        <div class="chapter-progress-fill" id="progress-3" style="width: 0%"></div>
+                    </div>
+                    <div class="chapter-progress-text" id="progress-text-3">0/25 项完成</div>
+                </div>
+            </div>
+
+            <!-- 第四章 -->
+            <div class="chapter-content" data-chapter="4">
+                <div class="chapter-header">
+                    <span class="chapter-number-badge">第四章</span>
+                    <h2 class="chapter-title">内容自检2 - 模拟审稿</h2>
+                    <p class="chapter-desc">使用GPT进行模拟审稿，识别潜在问题。</p>
+                </div>
+
+                <!-- 完成庆祝区域 -->
+                <div class="celebration-section" id="celebration">
+                    <div class="celebration-icon">🎉</div>
+                    <div class="celebration-title">恭喜你！</div>
+                    <div class="celebration-text">
+                        你已完成了一次论文的 <strong>Proofreading</strong>！<br>
+                        所有检查项都已完成，现在可以联系你的导师，开始让他修改了。
+                    </div>
+                    <div class="celebration-hint">
+                        👍 干得漂亮！继续保持这种严谨的态度！
+                    </div>
+                </div>
+
+                <div class="notice-box">
+                    <div class="notice-title">🤖 模拟审稿指令</div>
+                    <div class="notice-text">将整篇论文输入 GPT-5.4（Reasoning设为 thinking Xhigh）：</div>
+                    <blockquote>以下按 [你要投的会议] 审稿风格，给出一份较客观、偏严格的评审意见。</blockquote>
+                </div>
+
+                <div class="section">
+                    <h3 class="section-title">审稿意见处理</h3>
+                    <div class="checklist">
+                        <div class="check-item" data-id="c4-1">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">获得GPT生成的<strong>模拟审稿意见</strong></div>
+                        </div>
+                        <div class="check-item" data-id="c4-2">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">将审稿意见分为：<strong>能改的</strong> 和 <strong>不能改的</strong> 两类</div>
+                        </div>
+                        <div class="check-item" data-id="c4-3">
+                            <div class="checkbox-custom"></div>
+                            <div class="check-text">带着分类后的意见向<strong>导师汇报</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 完成庆祝区域 -->
+                <div class="celebration-section" id="celebration">
+                    <div class="celebration-icon">🎉</div>
+                    <div class="celebration-title">恭喜你！</div>
+                    <div class="celebration-text">
+                        你已完成了一次论文的 <strong>Proofreading</strong>！<br>
+                        所有检查项都已完成，现在可以联系你的导师，开始让他修改了。
+                    </div>
+                    <div class="celebration-hint">
+                        👍 干得漂亮！继续保持这种严谨的态度！
+                    </div>
+                </div>
+
+                <div class="chapter-progress">
+                    <div class="chapter-progress-bar">
+                        <div class="chapter-progress-fill" id="progress-4" style="width: 0%"></div>
+                    </div>
+                    <div class="chapter-progress-text" id="progress-text-4">0/3 项完成</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- 版权信息 -->
+        <div style="text-align: center; padding: 30px; color: rgba(255,255,255,0.8); font-size: 14px;">
+            <p style="font-weight: 600; margin-bottom: 8px;">版权 太原理工大工业互联网安全山西重点实验室 Defal 小组 杜蓉 2026 durong@tyut.edu.cn</p>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        let progress = JSON.parse(localStorage.getItem('defalThesisProgress')) || {};
+
+        // 每个章节的检查项数量
+        const chapterTotals = {
+            0: 5,
+            1: 25,
+            2: 5,
+            3: 25,
+            4: 3
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initCheckboxes();
+            updateAllProgress();
+        });
+
+        // 初始化复选框
+        function initCheckboxes() {
+            document.querySelectorAll('.check-item').forEach(item => {
+                const id = item.dataset.id;
+                const checkbox = item.querySelector('.checkbox-custom');
+                const isChecked = progress[id] || false;
+
+                if (isChecked) {
+                    item.classList.add('checked');
+                    checkbox.classList.add('checked');
+                }
+
+                item.addEventListener('click', () => toggleCheck(id));
+            });
+        }
+
+        // 切换检查状态
+        function toggleCheck(id) {
+            const item = document.querySelector(`[data-id="${id}"]`);
+            const checkbox = item.querySelector('.checkbox-custom');
+            const isChecked = item.classList.contains('checked');
+
+            if (isChecked) {
+                item.classList.remove('checked');
+                checkbox.classList.remove('checked');
+                progress[id] = false;
+            } else {
+                item.classList.add('checked');
+                checkbox.classList.add('checked');
+                progress[id] = true;
+            }
+
+            localStorage.setItem('defalThesisProgress', JSON.stringify(progress));
+            updateAllProgress();
+        }
+
+        // 更新所有进度
+        function updateAllProgress() {
+            let totalCompleted = 0;
+            let totalTasks = 0;
+            let completedChapters = 0;
+
+            for (let chapter = 0; chapter <= 4; chapter++) {
+                const chapterProgress = updateChapterProgress(chapter);
+                totalCompleted += chapterProgress.completed;
+                totalTasks += chapterProgress.total;
+
+                if (chapterProgress.completed === chapterProgress.total && chapterProgress.total > 0) {
+                    completedChapters++;
+                }
+            }
+
+            // 更新总体进度
+            const totalPercent = totalTasks > 0 ? Math.round((totalCompleted / totalTasks) * 100) : 0;
+            document.getElementById('totalPercent').textContent = totalPercent + '%';
+            document.getElementById('totalProgressBar').style.width = totalPercent + '%';
+            document.getElementById('totalTasks').textContent = totalTasks;
+            document.getElementById('completedTasks').textContent = totalCompleted;
+            document.getElementById('remainingTasks').textContent = totalTasks - totalCompleted;
+            document.getElementById('completedChapters').textContent = completedChapters;
+
+            // 更新章节标签状态
+            updateChapterTabs();
+
+            // 检查是否全部完成
+            if (totalPercent === 100) {
+                document.getElementById('celebration').classList.add('show');
+            } else {
+                document.getElementById('celebration').classList.remove('show');
+            }
+        }
+
+        // 更新单个章节进度
+        function updateChapterProgress(chapter) {
+            const items = document.querySelectorAll(`.chapter-content[data-chapter="${chapter}"] .check-item`);
+            let completed = 0;
+            const total = items.length;
+
+            items.forEach(item => {
+                if (item.classList.contains('checked')) {
+                    completed++;
+                }
+            });
+
+            const percent = total > 0 ? (completed / total) * 100 : 0;
+            const progressFill = document.getElementById(`progress-${chapter}`);
+            const progressText = document.getElementById(`progress-text-${chapter}`);
+
+            if (progressFill) progressFill.style.width = percent + '%';
+            if (progressText) progressText.textContent = `${completed}/${total} 项完成`;
+
+            return { completed, total };
+        }
+
+        // 更新章节标签状态
+        function updateChapterTabs() {
+            const tabs = document.querySelectorAll('.chapter-tab');
+            tabs.forEach((tab, index) => {
+                const progress = updateChapterProgress(index);
+                if (progress.completed === progress.total && progress.total > 0) {
+                    tab.classList.add('completed');
+                } else {
+                    tab.classList.remove('completed');
+                }
+            });
+        }
+
+        // 切换章节
+        function switchChapter(chapter) {
+            document.querySelectorAll('.chapter-tab').forEach((tab, index) => {
+                tab.classList.toggle('active', index === chapter);
+            });
+
+            document.querySelectorAll('.chapter-content').forEach((content, index) => {
+                content.classList.toggle('active', index === chapter);
+            });
+        }
+
+        // 重置进度（开始新论文）
+        function resetProgress() {
+            if (confirm('确定要开始新论文吗？这将清空当前所有检查进度。\n\n提示：建议在开始新论文前，先确认当前论文已完成并提交给导师。')) {
+                // 清空本地存储
+                localStorage.removeItem('defalThesisProgress');
+                progress = {};
+
+                // 重置所有勾选状态
+                document.querySelectorAll('.check-item').forEach(item => {
+                    item.classList.remove('checked');
+                    const checkbox = item.querySelector('.checkbox-custom');
+                    if (checkbox) {
+                        checkbox.classList.remove('checked');
+                    }
+                });
+
+                // 更新进度显示
+                updateAllProgress();
+
+                // 隐藏庆祝区域
+                const celebration = document.getElementById('celebration');
+                if (celebration) {
+                    celebration.classList.remove('show');
+                }
+
+                alert('✅ 进度已清空，可以开始新论文的自检了！');
+            }
+        }
+    </script>
+</body>
+</html>

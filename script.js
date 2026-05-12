@@ -1,48 +1,41 @@
 const articles = [
   {
-    title: "如何用 GitHub Pages 发布个人知识库",
-    category: "发布教程",
-    summary: "从本地文件夹、Git 提交、GitHub 仓库到 Pages 链接的完整路径。",
-    tags: ["GitHub", "Pages", "静态网站"],
-    url: "#workflow",
+    title: "Deafal Learning Path",
+    category: "网页资料",
+    summary: "学习路径网页，适合作为课程或知识路线的主线入口。",
+    tags: ["Learning Path", "Deafal", "网页"],
+    url: "./content/defal_learning_path.html",
   },
   {
-    title: "研究笔记的网页化整理方法",
-    category: "知识管理",
-    summary: "把论文阅读、实验记录和阶段性结论整理成可检索的网页内容。",
-    tags: ["研究", "笔记", "结构化"],
-    url: "#articles",
+    title: "Deafal Thesis Checklist",
+    category: "网页资料",
+    summary: "论文检查清单网页，用于写作、修改和投稿前核对。",
+    tags: ["Thesis", "Checklist", "论文"],
+    url: "./content/defal_thesis_checklist.html",
   },
   {
-    title: "面向公开发布的文章结构模板",
-    category: "写作模板",
-    summary: "用摘要、问题、方法、结果和参考资料来组织一篇知识文章。",
-    tags: ["模板", "写作", "复用"],
-    url: "#articles",
+    title: "Claude Code Guide",
+    category: "网页资料",
+    summary: "Claude Code 使用指南网页，便于快速打开和分享。",
+    tags: ["Claude Code", "Guide", "工程"],
+    url: "./content/claude-code-guide.html",
   },
   {
-    title: "把本地资料逐步迁移到网页",
-    category: "发布教程",
-    summary: "先做目录和摘要，再逐步补充完整页面，避免一次性迁移成本过高。",
-    tags: ["迁移", "内容维护", "工作流"],
-    url: "#articles",
-  },
-  {
-    title: "项目主页应该展示哪些信息",
-    category: "网站设计",
-    summary: "主页优先展示定位、核心分类、最新文章和 GitHub 入口。",
-    tags: ["主页", "导航", "信息架构"],
-    url: "#top",
-  },
-  {
-    title: "长期维护知识库的版本策略",
-    category: "知识管理",
-    summary: "用 Git commit 记录每次内容更新，让知识库有清晰的演进历史。",
-    tags: ["版本", "维护", "Git"],
-    url: "#articles",
+    title: "走进大模型智能体：认识架构、剖析风险与工程防护",
+    category: "PPT",
+    summary: "大模型智能体主题演示文稿，可下载后用 PowerPoint 或 WPS 打开。",
+    tags: ["LLM Agent", "架构", "风险", "工程防护"],
+    url: "./content/llm-agent-architecture-risk-engineering.pptx",
   },
 ];
 
+const accessPassword = "Deafal123";
+const authStorageKey = "deafalKnowledgeAccess";
+const authScreen = document.querySelector("#authScreen");
+const authForm = document.querySelector("#authForm");
+const passwordInput = document.querySelector("#passwordInput");
+const authError = document.querySelector("#authError");
+const logoutButton = document.querySelector("#logoutButton");
 const articleGrid = document.querySelector("#articleGrid");
 const categoryFilters = document.querySelector("#categoryFilters");
 const searchInput = document.querySelector("#searchInput");
@@ -88,7 +81,7 @@ function renderArticles() {
           <div class="tags">
             ${article.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}
           </div>
-          <a href="${article.url}">阅读内容</a>
+          <a href="${article.url}" target="_blank" rel="noreferrer">${article.category === "PPT" ? "下载 PPT" : "打开网页"}</a>
         </article>
       `,
     )
@@ -107,5 +100,29 @@ categoryFilters.addEventListener("click", (event) => {
 
 searchInput.addEventListener("input", renderArticles);
 
+function setAuthenticated(isAuthenticated) {
+  document.body.classList.toggle("auth-locked", !isAuthenticated);
+  authScreen.hidden = isAuthenticated;
+  if (isAuthenticated) {
+    sessionStorage.setItem(authStorageKey, "true");
+  } else {
+    sessionStorage.removeItem(authStorageKey);
+    passwordInput.value = "";
+    passwordInput.focus();
+  }
+}
+
+authForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const isValid = passwordInput.value === accessPassword;
+  authError.hidden = isValid;
+  setAuthenticated(isValid);
+});
+
+logoutButton.addEventListener("click", () => {
+  setAuthenticated(false);
+});
+
 renderFilters();
 renderArticles();
+setAuthenticated(sessionStorage.getItem(authStorageKey) === "true");
