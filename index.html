@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="RONGDU Knowledge Hub: a lightweight knowledge publishing website for notes, guides, and research summaries."
+    />
+    <title>RONGDU Knowledge Hub</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="主导航">
+        <a class="brand" href="#top" aria-label="返回首页">
+          <span class="brand-mark">R</span>
+          <span>RONGDU Knowledge Hub</span>
+        </a>
+        <div class="nav-links">
+          <a href="#articles">知识库</a>
+          <a href="#workflow">发布流程</a>
+          <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-media" role="img" aria-label="知识网络和文档发布场景"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Personal knowledge publishing</p>
+          <h1 id="hero-title">把研究、笔记和教程发布成一个可访问的网页知识库</h1>
+          <p class="hero-copy">
+            这个项目适合先在本地编辑内容，再推送到 GitHub 仓库，并通过 GitHub Pages 生成公开访问链接。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#articles">浏览知识库</a>
+            <a class="button secondary" href="#workflow">查看发布流程</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section intro" aria-labelledby="intro-title">
+        <div>
+          <p class="eyebrow">Structure</p>
+          <h2 id="intro-title">一个轻量、可维护的发布起点</h2>
+        </div>
+        <div class="intro-grid">
+          <article>
+            <span class="metric">01</span>
+            <h3>本地编辑</h3>
+            <p>先在电脑上改文章、分类和页面风格，确认没问题再上传。</p>
+          </article>
+          <article>
+            <span class="metric">02</span>
+            <h3>GitHub 托管</h3>
+            <p>新建仓库保存代码和内容，版本历史可追踪，适合长期维护。</p>
+          </article>
+          <article>
+            <span class="metric">03</span>
+            <h3>Pages 发布</h3>
+            <p>启用 GitHub Pages 后，网站会获得一个公开访问链接。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section articles-section" id="articles" aria-labelledby="articles-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Knowledge Library</p>
+            <h2 id="articles-title">知识库</h2>
+          </div>
+          <label class="search">
+            <span class="visually-hidden">搜索文章</span>
+            <input id="searchInput" type="search" placeholder="搜索标题、摘要或关键词" />
+          </label>
+        </div>
+
+        <div class="filters" id="categoryFilters" aria-label="分类筛选"></div>
+        <div class="article-grid" id="articleGrid"></div>
+        <p class="empty-state" id="emptyState" hidden>没有找到匹配的内容。</p>
+      </section>
+
+      <section class="section workflow" id="workflow" aria-labelledby="workflow-title">
+        <div>
+          <p class="eyebrow">Publishing Workflow</p>
+          <h2 id="workflow-title">从本地到公开链接</h2>
+        </div>
+        <ol class="steps">
+          <li>
+            <strong>本地维护内容</strong>
+            <span>在 `script.js` 的 `articles` 数组里新增文章标题、摘要、分类和链接。</span>
+          </li>
+          <li>
+            <strong>推送到 GitHub 仓库</strong>
+            <span>把这个文件夹提交到你账号下的新仓库，例如 `knowledge-publishing-site`。</span>
+          </li>
+          <li>
+            <strong>启用 GitHub Pages</strong>
+            <span>进入仓库 Settings -> Pages，选择 `main` 分支和根目录发布。</span>
+          </li>
+          <li>
+            <strong>获得访问链接</strong>
+            <span>通常会是 `https://rongdugithub.github.io/仓库名/`。</span>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>RONGDU Knowledge Hub</p>
+      <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">View repositories</a>
+    </footer>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
