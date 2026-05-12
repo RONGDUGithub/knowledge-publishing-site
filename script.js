@@ -29,7 +29,7 @@ const articles = [
   },
 ];
 
-const accessPassword = "Deafal123";
+const accessPassword = "goose";
 const authStorageKey = "deafalKnowledgeAccess";
 const authScreen = document.querySelector("#authScreen");
 const authForm = document.querySelector("#authForm");
