@@ -8,7 +8,7 @@
       content="RONGDU Knowledge Hub: a lightweight knowledge publishing website for notes, guides, and research summaries."
     />
     <title>RONGDU Knowledge Hub</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.css?v=20260512-unlock3" />
   </head>
   <body class="auth-locked">
     <div class="auth-screen" id="authScreen">
@@ -21,7 +21,7 @@
           <span>访问密码</span>
           <input id="passwordInput" type="password" autocomplete="current-password" placeholder="输入密码" />
         </label>
-        <button class="button primary" type="submit">进入内容库</button>
+        <button class="button primary" id="unlockButton" type="button">进入内容库</button>
         <p class="auth-error" id="authError" role="alert" hidden>密码不正确，请重新输入。</p>
       </form>
     </div>
@@ -34,7 +34,6 @@
         </a>
         <div class="nav-links">
           <a href="#articles">内容库</a>
-          <a href="#workflow">发布流程</a>
           <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">GitHub</a>
           <button class="link-button" id="logoutButton" type="button">锁定</button>
         </div>
@@ -42,45 +41,6 @@
     </header>
 
     <main id="top">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-media" role="img" aria-label="知识网络和文档发布场景"></div>
-        <div class="hero-content">
-          <p class="eyebrow">Personal knowledge publishing</p>
-          <h1 id="hero-title">Deafal 网页资料与课程文档发布入口</h1>
-          <p class="hero-copy">
-            这里集中放置学习路径、论文检查清单、Claude Code 指南和大模型智能体 PPT，先本地维护，再推送到 GitHub Pages 发布。
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#articles">浏览内容库</a>
-            <a class="button secondary" href="#workflow">查看发布流程</a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section intro" aria-labelledby="intro-title">
-        <div>
-          <p class="eyebrow">Structure</p>
-          <h2 id="intro-title">先本地整理，再发布到 GitHub</h2>
-        </div>
-        <div class="intro-grid">
-          <article>
-            <span class="metric">01</span>
-            <h3>统一入口</h3>
-            <p>首页先输入密码，再进入资料列表，减少公开页面的直接暴露。</p>
-          </article>
-          <article>
-            <span class="metric">02</span>
-            <h3>内容归档</h3>
-            <p>网页和 PPT 都放在 `content` 目录，后续新增资料也保持同一结构。</p>
-          </article>
-          <article>
-            <span class="metric">03</span>
-            <h3>Pages 发布</h3>
-            <p>启用 GitHub Pages 后，网站会获得一个公开访问链接。</p>
-          </article>
-        </div>
-      </section>
-
       <section class="section articles-section" id="articles" aria-labelledby="articles-title">
         <div class="section-heading">
           <div>
@@ -97,38 +57,8 @@
         <div class="article-grid" id="articleGrid"></div>
         <p class="empty-state" id="emptyState" hidden>没有找到匹配的内容。</p>
       </section>
-
-      <section class="section workflow" id="workflow" aria-labelledby="workflow-title">
-        <div>
-          <p class="eyebrow">Publishing Workflow</p>
-          <h2 id="workflow-title">从本地到公开链接</h2>
-        </div>
-        <ol class="steps">
-          <li>
-            <strong>本地维护内容</strong>
-            <span>把 HTML、PPT 或 PDF 放进 `content` 目录，并在 `script.js` 的 `articles` 数组里新增入口。</span>
-          </li>
-          <li>
-            <strong>推送到 GitHub 仓库</strong>
-            <span>把这个文件夹提交到你账号下的新仓库，例如 `knowledge-publishing-site`。</span>
-          </li>
-          <li>
-            <strong>启用 GitHub Pages</strong>
-            <span>进入仓库 Settings -> Pages，选择 `main` 分支和根目录发布。</span>
-          </li>
-          <li>
-            <strong>获得访问链接</strong>
-            <span>通常会是 `https://rongdugithub.github.io/仓库名/`。</span>
-          </li>
-        </ol>
-      </section>
     </main>
 
-    <footer class="footer">
-      <p>Deafal Knowledge Hub</p>
-      <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">View repositories</a>
-    </footer>
-
-    <script src="./script.js"></script>
+    <script src="./script.js?v=20260512-unlock3"></script>
   </body>
 </html>
