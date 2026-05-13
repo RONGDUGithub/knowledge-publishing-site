@@ -34,6 +34,13 @@ const articles = [
     tags: ["Codex", "安装", "教程", "DOCX"],
     url: "./content/codex-install-guide.docx",
   },
+  {
+    title: "Codex 独立多开窗口脚本",
+    category: "BAT",
+    summary: "用于启动多个互相隔离的 Codex 窗口，防止多对话互相影响。使用前请把脚本里的 C:\\Users\\fuyue\\.codex-win1/2/3 改成自己的本机路径。",
+    tags: ["Codex", "多开", "隔离窗口", "BAT"],
+    url: "./content/codex-isolated-windows.bat",
+  },
 ];
 
 const accessPassword = "goose";
@@ -75,6 +82,7 @@ function articleMatchesQuery(article, query) {
 function getActionText(article) {
   if (article.category === "PPT") return "下载 PPT";
   if (article.category === "DOCX") return "下载 DOCX";
+  if (article.category === "BAT") return "下载 BAT";
   return "打开网页";
 }
 
