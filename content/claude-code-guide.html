@@ -1,475 +1,331 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Claude Code 入门指南 - defal 实验室</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Microsoft YaHei', 'PingFang SC', 'Helvetica Neue', Arial, sans-serif;
-            background: #F5F7FA;
-            color: #333333;
-            line-height: 1.8;
-        }
+      body {
+        margin: 0;
+        background: #f5f7fa;
+        color: #243042;
+        font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", Arial, sans-serif;
+        line-height: 1.75;
+      }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1rem;
-        }
+      .container {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 48px;
+      }
 
-        /* 头部区域 */
-        .header {
-            text-align: center;
-            padding: 3rem 2rem;
-            background: linear-gradient(135deg, #2D8CF0 0%, #1a6fc4 100%);
-            color: white;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 20px rgba(45, 140, 240, 0.3);
-        }
+      .header {
+        padding: 42px 28px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #2563eb 0%, #0f766e 100%);
+        color: #fff;
+        box-shadow: 0 14px 40px rgba(37, 99, 235, 0.22);
+      }
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
+      .header h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 5vw, 3.2rem);
+        line-height: 1.1;
+      }
 
-        .header .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+      .subtitle,
+      .lab-badge {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+      }
 
-        .header .lab-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
+      .lab-badge {
+        display: inline-block;
+        margin-top: 16px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+        font-size: 0.92rem;
+      }
 
-        /* 版权声明 */
-        .copyright {
-            background: #FFFFFF;
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border-left: 4px solid #FF7D00;
-        }
+      .notice,
+      .api-share,
+      .stage-card {
+        margin-top: 22px;
+        border: 1px solid #dce3ee;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      }
 
-        .copyright h3 {
-            color: #2D8CF0;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
+      .notice,
+      .api-share {
+        padding: 22px 24px;
+      }
 
-        .copyright p {
-            color: #666666;
-            font-size: 0.95rem;
-        }
+      .notice {
+        border-left: 5px solid #f59e0b;
+      }
 
-        /* API 共享信息 */
-        .api-share {
-            background: #E6F7FF;
-            border: 1px solid #91D5FF;
-            padding: 1.5rem 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-        }
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
 
-        .api-share h3 {
-            color: #2D8CF0;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-        }
+      .notice h2,
+      .api-share h2 {
+        margin-bottom: 8px;
+        color: #1d4ed8;
+        font-size: 1.18rem;
+      }
 
-        .api-share p {
-            color: #666666;
-            font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-        }
+      .api-share {
+        border-left: 5px solid #0f766e;
+      }
 
-        .api-key {
-            background: #FFFFFF;
-            padding: 0.8rem 1rem;
-            border-radius: 6px;
-            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #333333;
-            border: 1px dashed #2D8CF0;
-            word-break: break-all;
-            margin-top: 0.5rem;
-        }
+      .api-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
 
-        /* 卡片网格布局 */
+      .api-item {
+        padding: 14px;
+        border: 1px dashed #8fb8da;
+        border-radius: 8px;
+        background: #f8fbff;
+      }
+
+      .api-item strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #0f766e;
+      }
+
+      code {
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        word-break: break-all;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 22px;
+      }
+
+      .stage-card {
+        overflow: hidden;
+      }
+
+      .card-header {
+        padding: 22px;
+        border-bottom: 1px solid #edf1f7;
+        background: #f8fbff;
+      }
+
+      .stage-number {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 12px;
+        border-radius: 50%;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 800;
+      }
+
+      .stage-card:nth-child(2) .stage-number {
+        background: #f97316;
+      }
+
+      .stage-card:nth-child(3) .stage-number {
+        background: #16a34a;
+      }
+
+      .stage-title {
+        margin-bottom: 8px;
+        font-size: 1.28rem;
+      }
+
+      .stage-desc {
+        margin-bottom: 0;
+        color: #64748b;
+        font-size: 0.95rem;
+      }
+
+      .card-body {
+        padding: 22px;
+      }
+
+      .video-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 38px;
+        margin-bottom: 16px;
+        padding: 0 14px;
+        border-radius: 8px;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .todo-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .todo-item {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 10px;
+        border-radius: 8px;
+        background: #f8fafc;
+        cursor: pointer;
+      }
+
+      .todo-checkbox {
+        width: 19px;
+        height: 19px;
+        margin-top: 4px;
+        border: 2px solid #cbd5e1;
+        border-radius: 5px;
+        flex: 0 0 auto;
+      }
+
+      .todo-item.completed .todo-checkbox {
+        display: grid;
+        place-items: center;
+        border-color: #0f766e;
+        background: #0f766e;
+      }
+
+      .todo-item.completed .todo-checkbox::after {
+        content: "✓";
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .todo-item.completed .todo-text {
+        color: #94a3b8;
+        text-decoration: line-through;
+      }
+
+      .footer {
+        margin-top: 28px;
+        color: #64748b;
+        text-align: center;
+        font-size: 0.92rem;
+      }
+
+      @media (max-width: 900px) {
+        .api-grid,
         .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+          grid-template-columns: 1fr;
         }
-
-        .stage-card {
-            background: #FFFFFF;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 4px solid #2D8CF0;
-        }
-
-        .stage-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-        }
-
-        .stage-card.stage-2 {
-            border-top-color: #FF7D00;
-        }
-
-        .stage-card.stage-3 {
-            border-top-color: #52C41A;
-        }
-
-        .card-header {
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #F0F7FF 0%, #FFFFFF 100%);
-            border-bottom: 1px solid #F0F0F0;
-        }
-
-        .stage-card.stage-2 .card-header {
-            background: linear-gradient(135deg, #FFF7E6 0%, #FFFFFF 100%);
-        }
-
-        .stage-card.stage-3 .card-header {
-            background: linear-gradient(135deg, #F6FFED 0%, #FFFFFF 100%);
-        }
-
-        .stage-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #2D8CF0;
-            color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            font-weight: bold;
-            margin-bottom: 0.8rem;
-        }
-
-        .stage-card.stage-2 .stage-number {
-            background: #FF7D00;
-        }
-
-        .stage-card.stage-3 .stage-number {
-            background: #52C41A;
-        }
-
-        .stage-title {
-            font-size: 1.3rem;
-            color: #333333;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .stage-desc {
-            color: #666666;
-            font-size: 0.95rem;
-        }
-
-        .card-body {
-            padding: 1.5rem;
-        }
-
-        .video-link {
-            display: inline-flex;
-            align-items: center;
-            background: #2D8CF0;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            transition: background 0.3s ease;
-        }
-
-        .video-link:hover {
-            background: #1a6fc4;
-        }
-
-        .video-link::before {
-            content: '▶ ';
-            margin-right: 0.3rem;
-        }
-
-        .stage-card.stage-2 .video-link {
-            background: #FF7D00;
-        }
-
-        .stage-card.stage-2 .video-link:hover {
-            background: #d9a900;
-        }
-
-        .stage-card.stage-3 .video-link {
-            background: #52C41A;
-        }
-
-        .stage-card.stage-3 .video-link:hover {
-            background: #389e0d;
-        }
-
-        /* Todo List 样式 */
-        .todo-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .todo-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 0.8rem;
-            margin-bottom: 0.5rem;
-            background: #F8F9FA;
-            border-radius: 8px;
-            transition: background 0.2s ease;
-            cursor: pointer;
-        }
-
-        .todo-item:hover {
-            background: #F0F0F0;
-        }
-
-        .todo-checkbox {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #D9D9D9;
-            border-radius: 4px;
-            margin-right: 0.8rem;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            margin-top: 2px;
-        }
-
-        .todo-item:hover .todo-checkbox {
-            border-color: #2D8CF0;
-        }
-
-        .stage-card.stage-2 .todo-item:hover .todo-checkbox {
-            border-color: #FF7D00;
-        }
-
-        .stage-card.stage-3 .todo-item:hover .todo-checkbox {
-            border-color: #52C41A;
-        }
-
-        .todo-item.completed .todo-checkbox {
-            background: #2D8CF0;
-            border-color: #2D8CF0;
-        }
-
-        .stage-card.stage-2 .todo-item.completed .todo-checkbox {
-            background: #FF7D00;
-            border-color: #FF7D00;
-        }
-
-        .stage-card.stage-3 .todo-item.completed .todo-checkbox {
-            background: #52C41A;
-            border-color: #52C41A;
-        }
-
-        .todo-item.completed .todo-checkbox::after {
-            content: '✓';
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .todo-text {
-            color: #333333;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .todo-item.completed .todo-text {
-            color: #999999;
-            text-decoration: line-through;
-        }
-
-        /* 页脚 */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: #999999;
-            font-size: 0.9rem;
-            margin-top: 2rem;
-        }
-
-        /* 响应式 */
-        @media (max-width: 900px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <div class="container">
-        <!-- 头部 -->
-        <header class="header">
-            <h1>Claude Code 入门指南</h1>
-            <p class="subtitle">从零开始掌握 AI 辅助编程</p>
-            <div class="lab-badge">🏫 太原理工大学 defal 实验室 | 杜蓉</div>
-        </header>
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Claude Code 入门指南</h1>
+        <p class="subtitle">从零开始掌握 AI 辅助编程</p>
+        <div class="lab-badge">太原理工大学 defal 实验室 | 杜蓉</div>
+      </header>
 
-        <!-- 版权声明 -->
-        <div class="copyright">
-            <h3>📋 版权声明</h3>
-            <p>© 2026 太原理工大学 defal 实验室 杜蓉。本教程仅供学习交流使用，未经许可不得转载或用于商业用途。</p>
+      <section class="notice">
+        <h2>版权声明</h2>
+        <p>© 2026 太原理工大学 defal 实验室 杜蓉。本教程仅供学习交流使用，未经许可不得转载或用于商业用途。</p>
+      </section>
+
+      <section class="api-share">
+        <h2>Kimi API 配置说明</h2>
+        <p>Kimi 提供 OpenAI 兼容 API，可在 Kimi 开放平台控制台创建自己的 API Key。是否有免费额度或活动额度，以平台控制台当前显示为准。</p>
+        <p>不要在网页、GitHub 仓库或群聊里公开粘贴自己的 API Key。推荐配合 CC SWITCH 使用，并把 Key 保存在本机环境变量或工具配置中。</p>
+        <div class="api-grid">
+          <div class="api-item">
+            <strong>API Key</strong>
+            <code>在 Kimi 开放平台控制台创建</code>
+          </div>
+          <div class="api-item">
+            <strong>Base URL</strong>
+            <code>https://api.moonshot.ai/v1</code>
+          </div>
+          <div class="api-item">
+            <strong>常用模型</strong>
+            <code>kimi-k2、moonshot-v1-8k、moonshot-v1-32k、moonshot-v1-128k</code>
+          </div>
         </div>
+      </section>
 
-        <!-- API 配置信息 -->
-        <div class="api-share">
-            <h3>🔑 Kimi API 配置说明</h3>
-            <p>Kimi 提供 OpenAI 兼容 API，可在 Kimi 开放平台创建自己的 API Key；是否有免费额度或活动额度，以平台控制台当前显示为准。</p>
-            <p>不要在网页、GitHub 仓库或群聊里公开粘贴自己的 API Key。推荐配合 CC SWITCH 使用，并把 Key 保存在本机环境变量或工具配置中。</p>
-            <div class="api-key">
-                API Key：在 Kimi 开放平台控制台创建<br>
-                Base URL：https://api.moonshot.ai/v1<br>
-                常用模型：kimi-k2、kimi-k2-0905-preview、moonshot-v1-8k、moonshot-v1-32k、moonshot-v1-128k
-            </div>
-        </div>
+      <section class="cards-grid" aria-label="学习阶段">
+        <article class="stage-card">
+          <div class="card-header">
+            <div class="stage-number">1</div>
+            <h2 class="stage-title">初步认识和安装</h2>
+            <p class="stage-desc">安装成功后，Claude Code 就是你的专业前端工程师助手。</p>
+          </div>
+          <div class="card-body">
+            <a class="video-link" href="https://www.bilibili.com/video/BV1KJ61BBEB1/?spm_id_from=333.1391.0.0&vd_source=56d6f98fed45cb76370fac3ccc96bd7d" target="_blank" rel="noreferrer">观看视频教程</a>
+            <ul class="todo-list">
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">了解 Claude Code 的基本概念和用途</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">完成 Claude Code 的安装和配置</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">用一句话生成 Todo List 网页</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">用一句话生成可添加课程的课表网页</span></li>
+            </ul>
+          </div>
+        </article>
 
-        <!-- 横向卡片网格 -->
-        <div class="cards-grid">
-            <!-- 第一阶段 -->
-            <div class="stage-card">
-                <div class="card-header">
-                    <div class="stage-number">1</div>
-                    <h2 class="stage-title">初步认识和安装</h2>
-                    <p class="stage-desc">安装成功后，Claude Code 就是你的专业前端工程师助手！</p>
-                </div>
-                <div class="card-body">
-                    <a href="https://www.bilibili.com/video/BV1KJ61BBEB1/?spm_id_from=333.1391.0.0&vd_source=56d6f98fed45cb76370fac3ccc96bd7d"
-                       target="_blank" class="video-link">观看视频教程（B站）</a>
+        <article class="stage-card">
+          <div class="card-header">
+            <div class="stage-number">2</div>
+            <h2 class="stage-title">进阶 1 - 认识基本组件</h2>
+            <p class="stage-desc">深入了解 Claude Code 的核心功能和常用组件。</p>
+          </div>
+          <div class="card-body">
+            <a class="video-link" href="https://www.bilibili.com/video/BV1ntQBBgE4N?spm_id_from=333.788.videopod.episodes&vd_source=56d6f98fed45cb76370fac3ccc96bd7d&p=6" target="_blank" rel="noreferrer">观看进阶教程</a>
+            <ul class="todo-list">
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">理解 Claude Code 的基本功能架构</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">熟悉常用组件和工具的使用方法</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">尝试简单的代码编写练习</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">建立对 Claude Code 工作流程的认知</span></li>
+            </ul>
+          </div>
+        </article>
 
-                    <ul class="todo-list">
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">了解 Claude Code 的基本概念和用途</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">完成 Claude Code 的安装和配置</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">用一句话生成 Todo List 网页</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">用一句话生成愤怒的小鸟网页</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">用一句话生成可添加课程的课表网页</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <article class="stage-card">
+          <div class="card-header">
+            <div class="stage-number">3</div>
+            <h2 class="stage-title">进阶 2 - 项目实战</h2>
+            <p class="stage-desc">通过具体项目系统学习 Claude Code 的高级功能。</p>
+          </div>
+          <div class="card-body">
+            <a class="video-link" href="https://www.bilibili.com/video/BV14rzQB9EJj/?spm_id_from=333.1391.0.0&vd_source=56d6f98fed45cb76370fac3ccc96bd7d" target="_blank" rel="noreferrer">观看项目实战</a>
+            <ul class="todo-list">
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">跟随教程完整敲一遍项目代码</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">通过实战深入理解各项功能</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">掌握项目开发中的最佳实践</span></li>
+              <li class="todo-item" onclick="this.classList.toggle('completed')"><div class="todo-checkbox"></div><span class="todo-text">能够独立完成类似的小型项目</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
 
-            <!-- 第二阶段 -->
-            <div class="stage-card stage-2">
-                <div class="card-header">
-                    <div class="stage-number">2</div>
-                    <h2 class="stage-title">进阶 1 - 认识基本组件</h2>
-                    <p class="stage-desc">深入了解 Claude Code 的核心功能（第 5-10 节）</p>
-                </div>
-                <div class="card-body">
-                    <a href="https://www.bilibili.com/video/BV1ntQBBgE4N?spm_id_from=333.788.videopod.episodes&vd_source=56d6f98fed45cb76370fac3ccc96bd7d&p=6"
-                       target="_blank" class="video-link">观看视频教程（第5-10节）</a>
-
-                    <ul class="todo-list">
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">理解 Claude Code 的基本功能架构</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">熟悉常用组件和工具的使用方法</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">尝试简单的代码编写练习</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">建立对 Claude Code 工作流程的认知</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- 第三阶段 -->
-            <div class="stage-card stage-3">
-                <div class="card-header">
-                    <div class="stage-number">3</div>
-                    <h2 class="stage-title">进阶 2 - 项目实战</h2>
-                    <p class="stage-desc">通过具体项目系统学习 Claude Code 的高级功能</p>
-                </div>
-                <div class="card-body">
-                    <a href="https://www.bilibili.com/video/BV14rzQB9EJj/?spm_id_from=333.1391.0.0&vd_source=56d6f98fed45cb76370fac3ccc96bd7d"
-                       target="_blank" class="video-link">观看项目实战教程</a>
-
-                    <ul class="todo-list">
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">跟随 UP 主完整敲一遍项目代码</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">通过实战深入理解各项功能</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">掌握项目开发中的最佳实践</span>
-                        </li>
-                        <li class="todo-item" onclick="this.classList.toggle('completed')">
-                            <div class="todo-checkbox"></div>
-                            <span class="todo-text">能够独立完成类似的小型项目</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- 页脚 -->
-        <footer class="footer">
-            <p>太原理工大学 defal 实验室 © 2026 | Claude Code 学习之旅，从这里开始 🚀</p>
-        </footer>
-    </div>
-</body>
+      <footer class="footer">太原理工大学 defal 实验室 © 2026 | Claude Code 学习之旅，从这里开始</footer>
+    </main>
+  </body>
 </html>
