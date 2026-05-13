@@ -27,6 +27,13 @@ const articles = [
     tags: ["LLM Agent", "架构", "风险", "工程防护"],
     url: "./content/llm-agent-architecture-risk-engineering.pptx",
   },
+  {
+    title: "Codex 安装教程",
+    category: "DOCX",
+    summary: "Codex 安装教程文档，可下载后用 Word 或 WPS 打开。",
+    tags: ["Codex", "安装", "教程", "DOCX"],
+    url: "./content/codex-install-guide.docx",
+  },
 ];
 
 const accessPassword = "goose";
@@ -65,6 +72,12 @@ function articleMatchesQuery(article, query) {
   return text.includes(query.toLowerCase().trim());
 }
 
+function getActionText(article) {
+  if (article.category === "PPT") return "下载 PPT";
+  if (article.category === "DOCX") return "下载 DOCX";
+  return "打开网页";
+}
+
 function renderArticles() {
   const query = searchInput.value;
   const filtered = articles.filter((article) => {
@@ -82,7 +95,7 @@ function renderArticles() {
           <div class="tags">
             ${article.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}
           </div>
-          <a href="${article.url}" target="_blank" rel="noreferrer">${article.category === "PPT" ? "下载 PPT" : "打开网页"}</a>
+          <a href="${article.url}" target="_blank" rel="noreferrer">${getActionText(article)}</a>
         </article>
       `,
     )
