@@ -1,195 +1,490 @@
-const articles = [
-  {
-    title: "Deafal Learning Path",
-    category: "网页资料",
-    summary: "学习路径网页，适合作为课程或知识路线的主线入口。",
-    tags: ["Learning Path", "Deafal", "网页"],
-    url: "./content/defal_learning_path.html",
-  },
-  {
-    title: "Deafal Thesis Checklist",
-    category: "网页资料",
-    summary: "论文检查清单网页，用于写作、修改和投稿前核对。",
-    tags: ["Thesis", "Checklist", "论文"],
-    url: "./content/defal_thesis_checklist.html",
-  },
-  {
-    title: "Claude Code Guide",
-    category: "网页资料",
-    summary: "Claude Code 使用指南网页，便于快速打开和分享。",
-    tags: ["Claude Code", "Guide", "工程"],
-    url: "./content/claude-code-guide.html",
-  },
-  {
-    title: "走进大模型智能体：认识架构、剖析风险与工程防护",
-    category: "PPT",
-    summary: "大模型智能体主题演示文稿，可下载后用 PowerPoint 或 WPS 打开。",
-    tags: ["LLM Agent", "架构", "风险", "工程防护"],
-    url: "./content/llm-agent-architecture-risk-engineering.pptx",
-  },
-  {
-    title: "Codex 安装教程",
-    category: "DOCX",
-    summary: "Codex 安装教程文档，可下载后用 Word 或 WPS 打开。",
-    tags: ["Codex", "安装", "教程", "DOCX"],
-    url: "./content/codex-install-guide.docx",
-  },
-  {
-    title: "Codex 独立多开窗口脚本",
-    category: "BAT",
-    summary: "用于启动多个互相隔离的 Codex 窗口，防止多对话互相影响。使用前请把脚本里的 C:\\Users\\fuyue\\.codex-win1/2/3 改成自己的本机路径。",
-    tags: ["Codex", "多开", "隔离窗口", "BAT"],
-    url: "./content/codex-isolated-windows.bat",
-  },
-    {
-    title: "Codex 基础命令速查",
-    category: "网页资料",
-    summary: "按指令、作用和适用场景整理 Codex 常用斜杠命令，覆盖新手入门、日常开发和风险管控。",
-    tags: ["Codex", "命令", "斜杠指令", "新手入门"],
-    url: "./content/codex-basic-commands.html",
-  },
-];
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex 基础命令速查</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f8fa;
+        --paper: #ffffff;
+        --ink: #1f2937;
+        --muted: #667085;
+        --line: #d9dee7;
+        --brand: #205493;
+        --brand-soft: #e8f1fb;
+        --accent: #16836a;
+        --warn: #9a5b00;
+      }
 
-const accessPassword = "goose";
-const authStorageKey = "deafalKnowledgeAccess";
-const authScreen = document.querySelector("#authScreen");
-const authForm = document.querySelector("#authForm");
-const passwordInput = document.querySelector("#passwordInput");
-const unlockButton = document.querySelector("#unlockButton");
-const authError = document.querySelector("#authError");
-const logoutButton = document.querySelector("#logoutButton");
-const articleGrid = document.querySelector("#articleGrid");
-const categoryFilters = document.querySelector("#categoryFilters");
-const searchInput = document.querySelector("#searchInput");
-const emptyState = document.querySelector("#emptyState");
+      * {
+        box-sizing: border-box;
+      }
 
-let activeCategory = "全部";
+      body {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+        line-height: 1.65;
+        color: var(--ink);
+        background: var(--bg);
+      }
 
-function getCategories() {
-  return ["全部", ...new Set(articles.map((article) => article.category))];
-}
+      main {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+      }
 
-function renderFilters() {
-  categoryFilters.innerHTML = getCategories()
-    .map(
-      (category) => `
-        <button class="filter-button${category === activeCategory ? " active" : ""}" type="button" data-category="${category}">
-          ${category}
-        </button>
-      `,
-    )
-    .join("");
-}
+      .hero {
+        padding: 32px 0 24px;
+        border-bottom: 1px solid var(--line);
+      }
 
-function articleMatchesQuery(article, query) {
-  const text = [article.title, article.category, article.summary, ...article.tags].join(" ").toLowerCase();
-  return text.includes(query.toLowerCase().trim());
-}
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
 
-function getActionText(article) {
-  if (article.category === "PPT") return "下载 PPT";
-  if (article.category === "DOCX") return "下载 DOCX";
-  if (article.category === "BAT") return "下载 BAT";
-  return "打开网页";
-}
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 5vw, 52px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
 
-function renderArticles() {
-  const query = searchInput.value;
-  const filtered = articles.filter((article) => {
-    const matchesCategory = activeCategory === "全部" || article.category === activeCategory;
-    return matchesCategory && articleMatchesQuery(article, query);
-  });
+      .lead {
+        max-width: 760px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
 
-  articleGrid.innerHTML = filtered
-    .map(
-      (article) => `
-        <article class="article-card">
-          <span class="category">${article.category}</span>
-          <h3>${article.title}</h3>
-          <p>${article.summary}</p>
-          <div class="tags">
-            ${article.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}
-          </div>
-          <a href="${article.url}" target="_blank" rel="noreferrer">${getActionText(article)}</a>
-        </article>
-      `,
-    )
-    .join("");
+      .toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 24px 0 0;
+      }
 
-  emptyState.hidden = filtered.length > 0;
-}
+      .toc a,
+      .back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 7px 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--brand);
+        background: var(--paper);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
 
-categoryFilters.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-category]");
-  if (!button) return;
-  activeCategory = button.dataset.category;
-  renderFilters();
-  renderArticles();
-});
+      section {
+        padding: 32px 0 0;
+      }
 
-searchInput.addEventListener("input", renderArticles);
+      h2 {
+        margin: 0 0 16px;
+        font-size: 26px;
+        letter-spacing: 0;
+      }
 
-function readAccessState() {
-  try {
-    return sessionStorage.getItem(authStorageKey) === "true";
-  } catch {
-    return false;
-  }
-}
+      h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
 
-function writeAccessState(isAuthenticated) {
-  try {
-    if (isAuthenticated) {
-      sessionStorage.setItem(authStorageKey, "true");
-    } else {
-      sessionStorage.removeItem(authStorageKey);
-    }
-  } catch {
-    // Storage can be blocked in some browser privacy modes; visual unlock still works.
-  }
-}
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 14px;
+      }
 
-function unlockContent() {
-  document.body.classList.remove("auth-locked");
-  authScreen.hidden = true;
-  authScreen.setAttribute("aria-hidden", "true");
-  authScreen.style.display = "none";
-  writeAccessState(true);
-  document.querySelector("#articles").scrollIntoView({ block: "start" });
-}
+      .card {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
 
-function lockContent() {
-  document.body.classList.add("auth-locked");
-  authScreen.hidden = false;
-  authScreen.removeAttribute("aria-hidden");
-  authScreen.style.display = "grid";
-  writeAccessState(false);
-  passwordInput.value = "";
-  passwordInput.focus();
-}
+      .command {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        margin-bottom: 10px;
+        padding: 3px 9px;
+        border-radius: 5px;
+        color: var(--brand);
+        background: var(--brand-soft);
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 15px;
+        font-weight: 700;
+      }
 
-function checkPassword(event) {
-  event.preventDefault();
-  const isValid = passwordInput.value.trim() === accessPassword;
-  authError.hidden = isValid;
-  if (isValid) {
-    unlockContent();
-  } else {
-    passwordInput.select();
-  }
-}
+      .label {
+        margin: 12px 0 4px;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
 
-authForm.addEventListener("submit", checkPassword);
-unlockButton.addEventListener("click", checkPassword);
+      p {
+        margin: 0 0 10px;
+      }
 
-logoutButton.addEventListener("click", () => {
-  lockContent();
-});
+      ul,
+      ol {
+        margin: 8px 0 0;
+        padding-left: 22px;
+      }
 
-renderFilters();
-renderArticles();
-if (readAccessState()) {
-  unlockContent();
-} else {
-  lockContent();
-}
+      li + li {
+        margin-top: 6px;
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 4px;
+        color: #17324d;
+        background: #edf2f7;
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 0.94em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      th,
+      td {
+        padding: 13px 14px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--muted);
+        background: #f1f4f8;
+        font-size: 13px;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .note {
+        padding: 16px 18px;
+        border-left: 4px solid var(--accent);
+        border-radius: 6px;
+        background: #eef8f5;
+      }
+
+      .warning {
+        border-left-color: var(--warn);
+        background: #fff7e8;
+      }
+
+      .workflow {
+        display: grid;
+        gap: 10px;
+        counter-reset: step;
+      }
+
+      .step {
+        position: relative;
+        padding: 14px 16px 14px 54px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      .step::before {
+        counter-increment: step;
+        content: counter(step);
+        position: absolute;
+        top: 13px;
+        left: 16px;
+        display: grid;
+        width: 26px;
+        height: 26px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--brand);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      footer {
+        margin-top: 42px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 680px) {
+        main {
+          padding: 24px 14px 44px;
+        }
+
+        .hero {
+          padding-top: 22px;
+        }
+
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead {
+          display: none;
+        }
+
+        tr {
+          border-bottom: 1px solid var(--line);
+        }
+
+        td {
+          border-bottom: 0;
+        }
+
+        td::before {
+          content: attr(data-label);
+          display: block;
+          margin-bottom: 3px;
+          color: var(--muted);
+          font-size: 12px;
+          font-weight: 800;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="../index.html">返回内容库</a>
+      <header class="hero">
+        <p class="eyebrow">Codex Cheat Sheet</p>
+        <h1>Codex 基础命令速查</h1>
+        <p class="lead">
+          按“指令 + 作用 + 适用场景”整理 Codex 常用命令，适合新手入门、日常开发和提交前风险检查。
+        </p>
+        <p class="lead">作者：嘠迷你</p>
+        <nav class="toc" aria-label="页面目录">
+          <a href="#concept">核心概念</a>
+          <a href="#golden">10 条黄金指令</a>
+          <a href="#branch">分支管理</a>
+          <a href="#workflow">初始化流程</a>
+          <a href="#pitfalls">避坑提醒</a>
+        </nav>
+      </header>
+
+      <section id="concept">
+        <h2>一、核心概念：两种指令的区别</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>类型</th>
+              <th>定义</th>
+              <th>示例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="类型">普通 Prompt</td>
+              <td data-label="定义">让 Codex 执行的具体任务，重点是“做什么”。</td>
+              <td data-label="示例">帮我修复这个 bug、帮我重构权限系统</td>
+            </tr>
+            <tr>
+              <td data-label="类型">斜杠指令</td>
+              <td data-label="定义">控制 Codex 工作方式的命令，重点是“怎么管理工具”。</td>
+              <td data-label="示例"><code>/init</code> <code>/plan</code> <code>/diff</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="note">
+          关键规则：斜杠指令必须放在输入开头，否则会被当成普通文字；忘记指令时，直接输入 <code>/</code>
+          可唤起指令列表。
+        </div>
+      </section>
+
+      <section id="golden">
+        <h2>二、10 条黄金指令</h2>
+        <div class="grid">
+          <article class="card">
+            <span class="command">/init</span>
+            <h3>初始化项目</h3>
+            <p class="label">作用</p>
+            <p>生成 <code>AGENTS.md</code>，相当于给 Codex 写“项目入职手册”。</p>
+            <p class="label">适用场景</p>
+            <p>首次打开陌生项目、建立项目规则、避免每次重复说明启动方式和代码规范。</p>
+            <p class="label">建议</p>
+            <p>生成后手动补充禁止修改目录、依赖版本要求、测试命令等项目专属规范。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/status</span>
+            <h3>查看当前状态</h3>
+            <p class="label">作用</p>
+            <p>查看模型、权限策略、可写目录和上下文信息。</p>
+            <p class="label">适用场景</p>
+            <p>排查权限问题、确认模型切换是否成功、检查是否处于只读模式、对话过长时定位问题。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/model</span>
+            <h3>切换模型</h3>
+            <p class="label">作用</p>
+            <p>切换当前使用的模型，控制成本与效率。</p>
+            <p class="label">口诀</p>
+            <p>简单任务用快模型，复杂任务用强模型，该省省，该花花。</p>
+            <p class="label">场景</p>
+            <p>强模型适合大型重构、复杂 bug、架构设计；快模型适合改文案、看函数、修简单类型错误。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/permissions</span>
+            <h3>控制文件权限</h3>
+            <p class="label">作用</p>
+            <p>控制 Codex 的文件操作权限，例如只读、可修改、执行命令前需确认。</p>
+            <p class="label">适用场景</p>
+            <p>生产项目、老项目、无 Git 项目，避免 Codex 无限制修改文件导致风险。</p>
+            <p class="label">新手建议</p>
+            <p>初期设为只读，让 Codex 先读项目、出方案、解释原因，熟悉后再逐步放开权限。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/plan</span>
+            <h3>先出方案</h3>
+            <p class="label">作用</p>
+            <p>让 Codex 分析任务、输出方案，先不修改代码，提前理清需求和风险。</p>
+            <p class="label">适用场景</p>
+            <p>重构、技术迁移、复杂 bug、性能优化、多文件修改、不确定风险的任务。</p>
+            <p class="label">示例</p>
+            <p><code>/plan 帮我分析当前权限系统，给出最小风险的重构方案，先不要改代码</code></p>
+          </article>
+
+          <article class="card">
+            <span class="command">/mention</span>
+            <h3>指定目标文件</h3>
+            <p class="label">作用</p>
+            <p>指定文件、组件或配置，让 Codex 围绕目标分析，避免全项目无差别扫描。</p>
+            <p class="label">适用场景</p>
+            <p>已知报错文件、需要分析特定模块、希望节省 Token 和时间。</p>
+            <p class="label">示例</p>
+            <p><code>/mention ~/home/login.swift</code> 后续提问“帮我分析这个文件的登录流程”。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/diff</span>
+            <h3>查看真实改动</h3>
+            <p class="label">作用</p>
+            <p>查看 Codex 实际修改的文件内容，包括新增、删除和修改。</p>
+            <p class="label">适用场景</p>
+            <p>所有修改完成后、提交代码前必须使用，确认改动范围和内容。</p>
+            <p class="label">建议</p>
+            <p>搭配 <code>/review</code> 使用，先看改动，再做代码审查。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/review</span>
+            <h3>切换审查视角</h3>
+            <p class="label">作用</p>
+            <p>检查代码改动是否存在 bug、行为回归、缺测试、边界遗漏或安全风险。</p>
+            <p class="label">适用场景</p>
+            <p>提交代码前、Codex 完成修改后，确保改动符合预期且风险可控。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/compact</span>
+            <h3>压缩历史对话</h3>
+            <p class="label">作用</p>
+            <p>把历史对话压缩为摘要，继续当前任务，缩短上下文长度。</p>
+            <p class="label">关键说明</p>
+            <p>不是清空对话，而是保留当前话题的压缩历史；彻底换任务用 <code>/new</code> 或 <code>/clear</code>。</p>
+          </article>
+
+          <article class="card">
+            <span class="command">/resume</span>
+            <h3>恢复历史会话</h3>
+            <p class="label">作用</p>
+            <p>打开历史会话列表，恢复之前中断的任务，或切换回主线会话。</p>
+            <p class="label">适用场景</p>
+            <p>跨天任务、长时间 debug、大项目迁移、分阶段开发、<code>/fork</code> 后回到主线。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="branch">
+        <h2>三、辅助指令：会话分支管理</h2>
+        <div class="grid">
+          <article class="card">
+            <span class="command">/fork</span>
+            <h3>复制当前会话</h3>
+            <p>创建一条新的实验分支，类似 Git 分支，不影响主线会话。</p>
+            <p class="label">适用场景</p>
+            <p>尝试不同实现方案、对比多种架构、保留主线同时开实验线、让 Codex 用不同思路实现功能。</p>
+          </article>
+          <article class="card">
+            <span class="command">/side</span>
+            <h3>开启临时侧边对话</h3>
+            <p>问临时问题，不污染主线会话，问完可直接回到主线继续工作。</p>
+            <p class="label">适用场景</p>
+            <p>临时询问方案风险、概念解释、简单判断；不适合复杂多轮讨论或长期实验路线。</p>
+            <p class="label">示例</p>
+            <p><code>/side 这个方案有没有明显风险？</code></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="workflow">
+        <h2>四、新项目初始化流程</h2>
+        <div class="workflow">
+          <div class="step">进入项目目录。</div>
+          <div class="step">使用 <code>/init</code> 初始化项目说明，生成 <code>AGENTS.md</code>。</div>
+          <div class="step">使用 <code>/status</code> 查看当前状态，包括模型、权限和目录。</div>
+          <div class="step">让 Codex 先读项目，理解结构和关键模块。</div>
+          <div class="step">使用 <code>/plan</code> 输出任务方案，确认风险可控。</div>
+          <div class="step">确认方案后，再开始修改。</div>
+          <div class="step">使用 <code>/diff</code> 查看实际改动。</div>
+          <div class="step">使用 <code>/review</code> 做提交前代码审查。</div>
+          <div class="step">确认无误后提交代码。</div>
+        </div>
+      </section>
+
+      <section id="pitfalls">
+        <h2>新手避坑关键提醒</h2>
+        <div class="note warning">
+          <ul>
+            <li>权限不要一开始全开，生产项目和老项目优先只读模式。</li>
+            <li>复杂任务必须先 <code>/plan</code>，不要直接让 Codex 动手改代码。</li>
+            <li>所有修改完成后，一定用 <code>/diff</code> 看真实改动，不要只看总结。</li>
+            <li>对话过长时用 <code>/compact</code>，避免上下文无限增长。</li>
+            <li>临时问题用 <code>/side</code>，多方案尝试用 <code>/fork</code>，避免主线会话被污染。</li>
+          </ul>
+        </div>
+      </section>
+
+      <footer>作者：嘠迷你。整理日期：2026-05-14。适合作为 Codex 日常使用的快速参考页。</footer>
+    </main>
+  </body>
+</html>
