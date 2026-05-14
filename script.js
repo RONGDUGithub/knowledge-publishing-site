@@ -30,7 +30,7 @@ const articles = [
   {
     title: "Codex 安装教程",
     category: "DOCX",
-    summary: "Codex 安装教程文档，可下载后用 Word 或 WPS 打开。",
+    summary: "作者：一只神秘二维生物。Codex 安装教程文档，可下载后用 Word 或 WPS 打开。",
     tags: ["Codex", "安装", "教程", "DOCX"],
     url: "./content/codex-install-guide.docx",
   },
