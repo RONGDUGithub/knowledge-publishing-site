@@ -41,6 +41,13 @@ const articles = [
     tags: ["Codex", "多开", "隔离窗口", "BAT"],
     url: "./content/codex-isolated-windows.bat",
   },
+    {
+    title: "Codex 基础命令速查",
+    category: "网页资料",
+    summary: "按指令、作用和适用场景整理 Codex 常用斜杠命令，覆盖新手入门、日常开发和风险管控。",
+    tags: ["Codex", "命令", "斜杠指令", "新手入门"],
+    url: "./content/codex-basic-commands.html",
+  },
 ];
 
 const accessPassword = "goose";
