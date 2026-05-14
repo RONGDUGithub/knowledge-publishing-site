@@ -42,6 +42,13 @@ const articles = [
     url: "./content/codex-basic-commands.html",
   },
   {
+    title: "Codex 终极 Debug 方法",
+    category: "网页资料",
+    summary: "作者：李猈。通过删除 .codex 下的 auth.json 和 config.toml，重新登录 OpenAI 账户来修复 Codex 初始化异常。",
+    tags: ["Codex", "Debug", "登录", "配置重置"],
+    url: "./content/codex-ultimate-debug.html",
+  },
+  {
     title: "Codex 独立多开窗口脚本",
     category: "BAT",
     summary: "用于启动多个互相隔离的 Codex 窗口，防止多对话互相影响。使用前请把脚本里的 C:\\Users\\fuyue\\.codex-win1/2/3 改成自己的本机路径。",

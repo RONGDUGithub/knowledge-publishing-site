@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Codex 终极 Debug 方法</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f8fa;
+        --paper: #ffffff;
+        --ink: #1f2937;
+        --muted: #667085;
+        --line: #d9dee7;
+        --brand: #205493;
+        --brand-soft: #e8f1fb;
+        --danger: #a83b32;
+        --danger-soft: #fff0ee;
+        --ok: #16836a;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+        color: var(--ink);
+        line-height: 1.68;
+        background: var(--bg);
+      }
+
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 40px 20px 64px;
+      }
+
+      .back {
+        display: inline-flex;
+        align-items: center;
+        min-height: 36px;
+        padding: 7px 12px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        color: var(--brand);
+        background: var(--paper);
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      header {
+        padding: 32px 0 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px;
+        color: var(--brand);
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 5vw, 52px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .lead {
+        max-width: 760px;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      section {
+        padding-top: 30px;
+      }
+
+      h2 {
+        margin: 0 0 14px;
+        font-size: 24px;
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      code {
+        padding: 2px 5px;
+        border-radius: 4px;
+        color: #17324d;
+        background: #edf2f7;
+        font-family: "Cascadia Code", Consolas, monospace;
+        font-size: 0.94em;
+      }
+
+      .panel {
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      .warning {
+        border-left: 4px solid var(--danger);
+        background: var(--danger-soft);
+      }
+
+      .ok {
+        border-left: 4px solid var(--ok);
+        background: #eef8f5;
+      }
+
+      .steps {
+        display: grid;
+        gap: 12px;
+        counter-reset: step;
+      }
+
+      .step {
+        position: relative;
+        padding: 16px 16px 16px 56px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      .step::before {
+        counter-increment: step;
+        content: counter(step);
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 50%;
+        color: #fff;
+        background: var(--brand);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .step strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      footer {
+        margin-top: 42px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 680px) {
+        main {
+          padding: 24px 14px 44px;
+        }
+
+        header {
+          padding-top: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="../index.html">返回内容库</a>
+      <header>
+        <p class="eyebrow">Codex Debug</p>
+        <h1>Codex 终极 Debug 方法</h1>
+        <p class="lead">作者：李猈</p>
+        <p class="lead">用于处理 Codex 登录、配置或组件加载异常时的重置流程。</p>
+      </header>
+
+      <section>
+        <h2>适用场景</h2>
+        <div class="panel ok">
+          <p>当 Codex 出现登录异常、账户状态混乱、配置文件疑似损坏、首次启动卡住或组件加载报错时，可以尝试这套重置流程。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>重要提醒</h2>
+        <div class="panel warning">
+          <p>这个方法会删除 Codex 的本地认证和配置文件。操作前请确认你能重新登录 OpenAI 账户。</p>
+          <p>文件名通常是 <code>auth.json</code> 和 <code>config.toml</code>。如果你看到的是大小写不同的文件名，以实际文件为准。</p>
+        </div>
+      </section>
+
+      <section>
+        <h2>操作步骤</h2>
+        <div class="steps">
+          <div class="step">
+            <strong>找到用户目录下的 <code>.codex</code> 文件夹</strong>
+            <p>Windows 常见位置是 <code>C:\Users\你的用户名\.codex</code>。</p>
+          </div>
+          <div class="step">
+            <strong>删除认证和配置文件</strong>
+            <p>删除 <code>auth.json</code> 和 <code>config.toml</code>。这一步会让 Codex 重新走登录和配置初始化。</p>
+          </div>
+          <div class="step">
+            <strong>重新打开 CMD</strong>
+            <p>关闭旧的命令行窗口，重新打开一个新的 CMD 或 PowerShell。</p>
+          </div>
+          <div class="step">
+            <strong>重新登录 OpenAI 账户</strong>
+            <p>启动 Codex 后按提示登录 OpenAI 账户，完成授权。</p>
+          </div>
+          <div class="step">
+            <strong>等待首次组件加载</strong>
+            <p>首次加载组件可能会非常慢，这是正常现象。</p>
+          </div>
+          <div class="step">
+            <strong>输入 <code>hi</code> 并耐心等待</strong>
+            <p>输入 <code>hi</code> 后，可能会先等到一个红色错误。不要立刻关闭，继续耐心等待，等 Codex 回复。</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>一句话总结</h2>
+        <div class="panel">
+          <p>删除 <code>.codex</code> 里的本地登录与配置文件，然后重新登录，让 Codex 从干净状态重新初始化。</p>
+        </div>
+      </section>
+
+      <footer>作者：李猈。整理日期：2026-05-15。</footer>
+    </main>
+  </body>
+</html>
