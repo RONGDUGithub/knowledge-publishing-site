@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "Harness 工程科普",
+    category: "PPT",
+    summary: "作者：留风禾。Harness 工程科普演示文稿，可下载后用 PowerPoint 或 WPS 打开。",
+    tags: ["Harness", "工程", "科普", "留风禾"],
+    url: "./content/harness-engineering-science.pptx",
+  },
+  {
     title: "Deafal Learning Path",
     category: "网页资料",
     summary: "学习路径网页，适合作为课程或知识路线的主线入口。",
