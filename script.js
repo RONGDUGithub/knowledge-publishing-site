@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "Anthropic 技术报告研读",
+    category: "网页资料",
+    summary: "作者：留清禾。Anthropic 技术报告研读网页版，整理 Agent 外部系统连接、MCP、Tool Search 与 Programmatic Tool Calling 等要点。",
+    tags: ["Anthropic", "技术报告", "MCP", "Agent", "留清禾"],
+    url: "./content/anthropic-technical-report-liu-qinghe.html",
+  },
+  {
     title: "Harness 工程科普",
     category: "PPT",
     summary: "作者：留风禾。Harness 工程科普演示文稿，可下载后用 PowerPoint 或 WPS 打开。",
