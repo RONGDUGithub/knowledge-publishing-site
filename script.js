@@ -71,14 +71,6 @@ const articles = [
   },
 ];
 
-const accessPassword = "goose";
-const authStorageKey = "deafalKnowledgeAccess";
-const authScreen = document.querySelector("#authScreen");
-const authForm = document.querySelector("#authForm");
-const passwordInput = document.querySelector("#passwordInput");
-const unlockButton = document.querySelector("#unlockButton");
-const authError = document.querySelector("#authError");
-const logoutButton = document.querySelector("#logoutButton");
 const articleGrid = document.querySelector("#articleGrid");
 const categoryFilters = document.querySelector("#categoryFilters");
 const searchInput = document.querySelector("#searchInput");
@@ -150,67 +142,5 @@ categoryFilters.addEventListener("click", (event) => {
 
 searchInput.addEventListener("input", renderArticles);
 
-function readAccessState() {
-  try {
-    return sessionStorage.getItem(authStorageKey) === "true";
-  } catch {
-    return false;
-  }
-}
-
-function writeAccessState(isAuthenticated) {
-  try {
-    if (isAuthenticated) {
-      sessionStorage.setItem(authStorageKey, "true");
-    } else {
-      sessionStorage.removeItem(authStorageKey);
-    }
-  } catch {
-    // Storage can be blocked in some browser privacy modes; visual unlock still works.
-  }
-}
-
-function unlockContent() {
-  document.body.classList.remove("auth-locked");
-  authScreen.hidden = true;
-  authScreen.setAttribute("aria-hidden", "true");
-  authScreen.style.display = "none";
-  writeAccessState(true);
-  document.querySelector("#articles").scrollIntoView({ block: "start" });
-}
-
-function lockContent() {
-  document.body.classList.add("auth-locked");
-  authScreen.hidden = false;
-  authScreen.removeAttribute("aria-hidden");
-  authScreen.style.display = "grid";
-  writeAccessState(false);
-  passwordInput.value = "";
-  passwordInput.focus();
-}
-
-function checkPassword(event) {
-  event.preventDefault();
-  const isValid = passwordInput.value.trim() === accessPassword;
-  authError.hidden = isValid;
-  if (isValid) {
-    unlockContent();
-  } else {
-    passwordInput.select();
-  }
-}
-
-authForm.addEventListener("submit", checkPassword);
-unlockButton.addEventListener("click", checkPassword);
-
-logoutButton.addEventListener("click", () => {
-  lockContent();
-});
-
 renderFilters();
 renderArticles();
-if (readAccessState()) {
-  unlockContent();
-} else {
-  lockContent();
-}

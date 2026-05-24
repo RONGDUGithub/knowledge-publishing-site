@@ -8,24 +8,9 @@
       content="RONGDU Knowledge Hub: a lightweight knowledge publishing website for notes, guides, and research summaries."
     />
     <title>RONGDU Knowledge Hub</title>
-    <link rel="stylesheet" href="./styles.css?v=20260522-anthropic-page" />
+    <link rel="stylesheet" href="./styles.css?v=20260524-public-home" />
   </head>
-  <body class="auth-locked">
-    <div class="auth-screen" id="authScreen">
-      <form class="auth-card" id="authForm">
-        <span class="brand-mark">D</span>
-        <p class="eyebrow">Protected Entry</p>
-        <h1>Deafal 知识入口</h1>
-        <p>请输入访问密码后浏览网页资料和 PPT。</p>
-        <label>
-          <span>访问密码</span>
-          <input id="passwordInput" type="password" autocomplete="current-password" placeholder="输入密码" />
-        </label>
-        <button class="button primary" id="unlockButton" type="button">进入内容库</button>
-        <p class="auth-error" id="authError" role="alert" hidden>密码不正确，请重新输入。</p>
-      </form>
-    </div>
-
+  <body>
     <header class="site-header">
       <nav class="nav" aria-label="主导航">
         <a class="brand" href="#top" aria-label="返回首页">
@@ -35,7 +20,6 @@
         <div class="nav-links">
           <a href="#articles">内容库</a>
           <a href="https://github.com/RONGDUGithub?tab=repositories" target="_blank" rel="noreferrer">GitHub</a>
-          <button class="link-button" id="logoutButton" type="button">锁定</button>
         </div>
       </nav>
     </header>
@@ -59,6 +43,6 @@
       </section>
     </main>
 
-    <script src="./script.js?v=20260522-anthropic-page"></script>
+    <script src="./script.js?v=20260524-public-home"></script>
   </body>
 </html>

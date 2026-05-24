@@ -1,12 +1,6 @@
 # RONGDU Knowledge Hub
 
-这是一个适合 GitHub Pages 发布的静态知识库项目，当前首页设置了访问密码：
-
-```text
-goose
-```
-
-注意：GitHub Pages 是静态托管，前端密码只能作为浏览入口门槛，不能提供真正的服务器级访问控制。
+这是一个适合 GitHub Pages 发布的静态知识库项目，当前首页为公开访问。
 
 ## 本地查看
 
