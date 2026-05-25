@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "MTP",
+    category: "DOCX",
+    summary: "作者：一只神秘二维生物。MTP 文档，可下载后用 Word 或 WPS 打开。",
+    tags: ["MTP", "DOCX", "一只神秘二维生物"],
+    url: "./content/mtp.docx",
+  },
+  {
     title: "Anthropic 技术报告研读",
     category: "PPT",
     summary: "作者：留风禾。Anthropic 技术报告研读演示文稿，整理 Agent 外部系统连接、MCP、Tool Search 与 Programmatic Tool Calling 等要点。",
