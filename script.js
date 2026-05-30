@@ -1,5 +1,19 @@
 const articles = [
   {
+    title: "安装 Codex 速通",
+    category: "DOCX",
+    summary: "作者：bolun。安装 Codex 速通文档，可下载后用 Word 或 WPS 打开。发布时间：2026-05-31。",
+    tags: ["Codex", "安装", "速通", "bolun", "2026-05-31"],
+    url: "./content/install-codex-quickstart-bolun.docx",
+  },
+  {
+    title: "TRAE SOLO 操作指南",
+    category: "DOC",
+    summary: "作者：Louis。TRAE SOLO 操作指南文档，可下载后用 Word 或 WPS 打开。发布时间：2026-05-31。",
+    tags: ["TRAE SOLO", "操作指南", "Louis", "2026-05-31"],
+    url: "./content/trae-solo-guide-louis.doc",
+  },
+  {
     title: "MTP",
     category: "DOCX",
     summary: "作者：一只神秘二维生物。MTP 文档，可下载后用 Word 或 WPS 打开。",
@@ -109,6 +123,7 @@ function articleMatchesQuery(article, query) {
 function getActionText(article) {
   if (article.category === "PPT") return "下载 PPT";
   if (article.category === "DOCX") return "下载 DOCX";
+  if (article.category === "DOC") return "下载 DOC";
   if (article.category === "BAT") return "下载 BAT";
   return "打开网页";
 }
