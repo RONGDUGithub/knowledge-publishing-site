@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "智能体办公赋能培训：Trae work 超简单版",
+    category: "PPT",
+    summary: "作者：杜蓉。面向文科生和公职办公人员的智能体办公科普与 Trae work 使用指导，超级简单版本，欢迎下载使用。发布时间：2026-06-21。",
+    tags: ["智能体办公", "Trae work", "文科生", "公职办公", "杜蓉", "2026-06-21"],
+    url: "./content/ai-office-trae-work-du-rong.pptx",
+  },
+  {
     title: "安装 Codex 速通",
     category: "DOCX",
     summary: "作者：bolun。安装 Codex 速通文档，可下载后用 Word 或 WPS 打开。发布时间：2026-05-31。",
