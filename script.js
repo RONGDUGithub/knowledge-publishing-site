@@ -1,10 +1,17 @@
 const articles = [
   {
     title: "智能体办公赋能培训：Trae work 超简单版",
-    category: "PPT",
-    summary: "作者：杜蓉。面向文科生和公职办公人员的智能体办公科普与 Trae work 使用指导，超级简单版本，欢迎下载使用。发布时间：2026-06-21。",
-    tags: ["智能体办公", "Trae work", "文科生", "公职办公", "杜蓉", "2026-06-21"],
-    url: "./content/ai-office-trae-work-du-rong.pptx",
+    category: "PDF",
+    summary: "作者：杜蓉。面向文科生和公职办公人员的智能体办公科普与 Trae work 使用指导，超级简单版本，欢迎下载使用；也欢迎发邮箱索要 PPT 版本。发布时间：2026-06-21。",
+    tags: ["智能体办公", "Trae work", "文科生", "公职办公", "PDF", "杜蓉", "2026-06-21"],
+    url: "./content/ai-office-trae-work-du-rong.pdf",
+  },
+  {
+    title: "AI 和大模型科普：太原理工大学",
+    category: "PDF",
+    summary: "作者：李猈。AI 和大模型科普资料，可下载阅读；如需 PPT 版本，可以发邮件索取。发布时间：2026-06-21。",
+    tags: ["AI", "大模型", "科普", "太原理工大学", "PDF", "李猈", "2026-06-21"],
+    url: "./content/ai-and-llm-popular-science-taiyuan-university-of-technology-li-pi.pdf",
   },
   {
     title: "安装 Codex 速通",
@@ -128,6 +135,7 @@ function articleMatchesQuery(article, query) {
 }
 
 function getActionText(article) {
+  if (article.category === "PDF") return "下载 PDF";
   if (article.category === "PPT") return "下载 PPT";
   if (article.category === "DOCX") return "下载 DOCX";
   if (article.category === "DOC") return "下载 DOC";
