@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "提示词注入与 Role Confusion：组会详细版",
+    category: "PPT",
+    summary: "提示词注入与 Role Confusion 主题组会详细版演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
+    tags: ["提示词注入", "Prompt Injection", "Role Confusion", "组会", "PPT", "2026-08-27"],
+    url: "./content/prompt-injection-role-confusion-group-meeting-gamini.pptx",
+  },
+  {
     title: "智能体办公赋能培训：Trae work 超简单版",
     category: "PDF",
     summary: "作者：杜蓉。面向文科生和公职办公人员的智能体办公科普与 Trae work 使用指导，超级简单版本，欢迎下载使用；也欢迎发邮箱索要 PPT 版本。发布时间：2026-06-21。",
