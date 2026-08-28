@@ -1,5 +1,19 @@
 const articles = [
   {
+    title: "MLA",
+    category: "DOCX",
+    summary: "作者：一只神秘二维生物。MLA 文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-28。",
+    tags: ["MLA", "DOCX", "一只神秘二维生物", "2026-08-28"],
+    url: "./content/mla-mysterious-2d-creature.docx",
+  },
+  {
+    title: "SFT",
+    category: "DOCX",
+    summary: "作者：一只神秘二维生物。SFT 文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-28。",
+    tags: ["SFT", "DOCX", "一只神秘二维生物", "2026-08-28"],
+    url: "./content/sft-mysterious-2d-creature.docx",
+  },
+  {
     title: "使用中转站，如何更换 Codex 的 API",
     category: "DOCX",
     summary: "作者：bolun。使用中转站更换 Codex API 的操作文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-28。",
