@@ -30,8 +30,8 @@ const articles = [
   {
     title: "提示词注入与 Role Confusion：组会详细版",
     category: "PPT",
-    summary: "提示词注入与 Role Confusion 主题组会详细版演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
-    tags: ["提示词注入", "Prompt Injection", "Role Confusion", "组会", "PPT", "2026-08-27"],
+    summary: "作者：嘎咪你。提示词注入与 Role Confusion 主题组会详细版演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
+    tags: ["提示词注入", "Prompt Injection", "Role Confusion", "组会", "PPT", "嘎咪你", "2026-08-27"],
     url: "./content/prompt-injection-role-confusion-group-meeting-gamini.pptx",
   },
   {
