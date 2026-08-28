@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "使用中转站，如何更换 Codex 的 API",
+    category: "DOCX",
+    summary: "作者：bolun。使用中转站更换 Codex API 的操作文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-28。",
+    tags: ["Codex", "API", "中转站", "DOCX", "bolun", "2026-08-28"],
+    url: "./content/switch-codex-api-with-relay-bolun.docx",
+  },
+  {
     title: "AR/XR Glasses Survey",
     category: "PPT",
     summary: "作者：留风禾。AR/XR Glasses Survey 演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
