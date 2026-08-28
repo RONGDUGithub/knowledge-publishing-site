@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "AR/XR Glasses Survey",
+    category: "PPT",
+    summary: "作者：留风禾。AR/XR Glasses Survey 演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
+    tags: ["AR", "XR", "Glasses", "Survey", "PPT", "留风禾", "2026-08-27"],
+    url: "./content/ar-xr-glasses-survey-liu-fenghe.pptx",
+  },
+  {
     title: "提示词注入与 Role Confusion：组会详细版",
     category: "PPT",
     summary: "提示词注入与 Role Confusion 主题组会详细版演示文稿，可下载后使用 PowerPoint 或 WPS 打开。发布时间：2026-08-27。",
