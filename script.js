@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "CSA&HCA",
+    category: "DOCX",
+    summary: "作者：一只神秘二维生物。CSA&HCA 文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-29。",
+    tags: ["CSA", "HCA", "DOCX", "一只神秘二维生物", "2026-08-29"],
+    url: "./content/csa-hca-mysterious-2d-creature.docx",
+  },
+  {
     title: "MLA",
     category: "DOCX",
     summary: "作者：一只神秘二维生物。MLA 文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-28。",
