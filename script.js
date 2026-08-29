@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "人工智能新纪元：从大模型能力跃迁到智能体产业革命",
+    category: "PDF",
+    summary: "作者：李猈。介绍人工智能从大模型能力跃迁到智能体产业革命的发展脉络与应用趋势。发布时间：2026-08-29。",
+    tags: ["人工智能", "大模型", "智能体", "产业革命", "PDF", "李猈", "2026-08-29"],
+    url: "./content/ai-new-era-llm-agent-industry-revolution-li-pi.pdf",
+  },
+  {
     title: "CSA&HCA",
     category: "DOCX",
     summary: "作者：一只神秘二维生物。CSA&HCA 文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-29。",
