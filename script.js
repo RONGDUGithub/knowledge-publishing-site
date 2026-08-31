@@ -199,6 +199,11 @@ function getActionText(article) {
   return "打开网页";
 }
 
+function getLinkAttributes(article) {
+  if (article.category === "网页资料") return 'target="_blank" rel="noreferrer"';
+  return "download";
+}
+
 function renderArticles() {
   const query = searchInput.value;
   const filtered = articles.filter((article) => {
@@ -216,7 +221,7 @@ function renderArticles() {
           <div class="tags">
             ${article.tags.map((tag) => `<span class="tag">#${tag}</span>`).join("")}
           </div>
-          <a href="${article.url}" target="_blank" rel="noreferrer">${getActionText(article)}</a>
+          <a href="${article.url}" ${getLinkAttributes(article)}>${getActionText(article)}</a>
         </article>
       `,
     )
