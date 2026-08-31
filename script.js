@@ -1,5 +1,12 @@
 const articles = [
   {
+    title: "2026年8月 Codex 速通",
+    category: "DOCX",
+    summary: "作者：杜蓉。2026年8月 Codex 速通文档，可下载后使用 Word 或 WPS 打开。发布时间：2026-08-31。",
+    tags: ["Codex", "速通", "DOCX", "杜蓉", "2026-08-31"],
+    url: "./content/codex-quickstart-2026-08-durong.docx",
+  },
+  {
     title: "人工智能新纪元：从大模型能力跃迁到智能体产业革命",
     category: "PDF",
     summary: "作者：李猈。介绍人工智能从大模型能力跃迁到智能体产业革命的发展脉络与应用趋势。发布时间：2026-08-29。",
